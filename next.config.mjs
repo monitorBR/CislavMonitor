@@ -5,6 +5,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const nextConfig = {
   output: 'export',
+  basePath: '/CislavMonitor',
+  assetPrefix: '/CislavMonitor/',
   turbopack: {
     root: __dirname,
   },
