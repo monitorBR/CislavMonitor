@@ -6,11 +6,11 @@ import { average, invoiceDelay, invoiceTone, penaltyEstimate, riskLevel, stricte
 import { assistanceProviders, cislavExpenses, contracts as seedContracts, invoices as seedInvoices, municipalities as seedMunicipalities, publicSources, transfers as seedTransfers } from '@/lib/sample-data'
 import { historicalGeneratedAt, historicalSummaries } from '@/lib/historical-data'
 import { calculateBusinessDeadline, formatDate, overdueDays, parseDate } from '@/lib/date-utils'
-import type { AssistanceProvider, CislavExpense, Invoice, MunicipalityTransfer } from '@/types'
+import type { AssistanceProvider, CislavExpense, Invoice, MunicipalInvoiceEvidence, MunicipalityTransfer } from '@/types'
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 const today = new Date()
-const stateVersion = '2026-07-carrancas-api-only'
+const stateVersion = '2026-07-provider-nf-candidates'
 const municipalAudit = [
   { id: 'carrancas', status: 'conciliado', source: 'API municipal validada', nfCount: 1, note: 'NFSe 5792 encontrada.' },
   { id: 'ibituruna', status: 'conciliado', source: 'API municipal validada', nfCount: 4, note: 'NFs 5719 e 5734 encontradas.' },
@@ -122,13 +122,32 @@ function providerMatchesInvoice(provider: AssistanceProvider, invoice: Invoice) 
 
 function expenseMatchesInvoice(expense: CislavExpense, invoice: Invoice) {
   const invoiceDocument = normalizeDocument(invoice.professionalDocument)
-  if (invoiceDocument && normalizeDocument(expense.creditorDocument) === invoiceDocument) return true
   const creditor = normalizeText(expense.creditorName)
   const professional = normalizeText(invoice.professionalName)
+  const documentMatch = Boolean(invoiceDocument && normalizeDocument(expense.creditorDocument) === invoiceDocument)
   const nameMatch = professional.length >= 6 && (creditor.includes(professional) || professional.includes(creditor))
   const numberMatch = invoice.number && expense.invoiceNumber === invoice.number
   const issueMatch = !expense.invoiceIssueDate || expense.invoiceIssueDate === invoice.issueDate || monthFromDate(expense.issueDate) === monthFromDate(invoice.issueDate)
-  return Boolean((nameMatch || numberMatch) && issueMatch)
+  return Boolean((documentMatch || nameMatch || numberMatch) && issueMatch)
+}
+
+function expenseExactMatch(expense: CislavExpense, invoice: Invoice) {
+  const invoiceDocument = normalizeDocument(invoice.professionalDocument)
+  const documentMatch = Boolean(invoiceDocument && normalizeDocument(expense.creditorDocument) === invoiceDocument)
+  const numberMatch = Boolean(invoice.number && expense.invoiceNumber === invoice.number)
+  const issueMatch = Boolean(expense.invoiceIssueDate && expense.invoiceIssueDate === invoice.issueDate)
+  return (documentMatch || numberMatch) && (numberMatch || issueMatch)
+}
+
+function monthLabelFromHistory(history = '') {
+  const normalized = history.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase()
+  const months = [
+    ['JANEIRO', '01'], ['FEVEREIRO', '02'], ['MARCO', '03'], ['MARÇO', '03'], ['ABRIL', '04'], ['MAIO', '05'], ['JUNHO', '06'],
+    ['JULHO', '07'], ['AGOSTO', '08'], ['SETEMBRO', '09'], ['OUTUBRO', '10'], ['NOVEMBRO', '11'], ['DEZEMBRO', '12'],
+  ]
+  const year = normalized.match(/20\d{2}/)?.[0]
+  const found = months.find(([name]) => normalized.includes(name))
+  return year && found ? `${year}-${found[1]}` : undefined
 }
 
 function statusClass(tone: string) {
@@ -166,6 +185,26 @@ export default function Home() {
   const selectedServiceMonth = selectedCashMonth ? previousMonth(selectedCashMonth) : ''
   const selectedTransfers = selected ? transfers.filter((transfer) => selected.municipalityIds.includes(transfer.municipalityId)) : []
   const selectedCashTransfers = selected ? selectedTransfers.filter((transfer) => transfer.competence === selectedCashMonth) : []
+  const selectedMunicipalInvoiceEvidence: MunicipalInvoiceEvidence[] = selected ? selected.municipalityIds.flatMap((municipalityId) => {
+    const city = normalizedHistoricalSummaries.find((item) => item.municipalityId === municipalityId)
+    const month = city?.months[selectedCashMonth]
+    return (month?.nfs ?? []).filter((nf) => nf.notaFiscal || nf.emissao).map((nf) => ({
+      municipalityId,
+      municipality: city?.municipality ?? seedMunicipalities.find((item) => item.id === municipalityId)?.name ?? municipalityId,
+      competence: selectedCashMonth,
+      commitmentNumber: nf.empenho,
+      invoiceNumber: nf.notaFiscal,
+      issueDate: nf.emissao,
+      dueDate: nf.vencimento,
+      paymentDate: nf.pagamento,
+      amount: nf.valor,
+      source: nf.importSource === 'csv_lavras' || nf.importSource === 'csv_nepomuceno' ? 'importacao_csv' : 'api_municipal',
+    }))
+  }) : []
+  const selectedMunicipalitiesWithoutInvoice = selected ? selected.municipalityIds.filter((municipalityId) => {
+    const audit = municipalAudit.find((item) => item.id === municipalityId)
+    return !selectedMunicipalInvoiceEvidence.some((item) => item.municipalityId === municipalityId) && audit?.status !== 'somente CISLAV'
+  }) : []
   const metrics = useMemo(() => {
     const nfDelays = invoices.map((invoice) => invoiceDelay(invoice, today).calendar).filter((days) => days > 0)
     const transferDelays = transfers.map((transfer) => transferDelay(transfer, today))
@@ -238,7 +277,11 @@ export default function Home() {
   const penalty = selected ? penaltyEstimate(selected, today) : undefined
   const allLinkedPaid = selectedCashTransfers.length > 0 && selectedCashTransfers.every((transfer) => transferStatus(transfer, today) === 'paid')
   const selectedMunicipalityNames = selected?.municipalityIds.map((id) => seedMunicipalities.find((city) => city.id === id)?.name ?? id) ?? []
-  const delayedLinkedTransfers = selectedCashTransfers.filter((transfer) => transferStatus(transfer, today) === 'overdue')
+  const delayedLinkedTransfers = selectedCashTransfers.filter((transfer) => {
+    const audit = municipalAudit.find((item) => item.id === transfer.municipalityId)
+    const hasIssuedInvoice = selectedMunicipalInvoiceEvidence.some((item) => item.municipalityId === transfer.municipalityId)
+    return transferStatus(transfer, today) === 'overdue' && (hasIssuedInvoice || audit?.status === 'somente CISLAV')
+  })
   const divergentLinkedTransfers = selectedCashTransfers.filter((transfer) => transfer.divergenceNote)
   const responsibility = selectedDelay && selected && selectedDelay.calendar > 0 && selected.paymentStatus !== 'paid'
     ? delayedLinkedTransfers.length > 0
@@ -252,7 +295,13 @@ export default function Home() {
       return professional.length >= 3 && normalizeText(provider.name).includes(professional.slice(0, 10))
     }).slice(0, 5)
     : providerMatches
-  const expenseMatches = selected ? cislavExpenses.filter((expense) => expenseMatchesInvoice(expense, selected)) : []
+  const expenseMatches = selected ? cislavExpenses.filter((expense) => expenseMatchesInvoice(expense, selected)).sort((a, b) => (b.invoiceIssueDate ?? b.issueDate).localeCompare(a.invoiceIssueDate ?? a.issueDate)) : []
+  const exactExpenseMatches = selected ? expenseMatches.filter((expense) => expenseExactMatch(expense, selected)) : []
+  const providerTimingStats = expenseMatches.length ? {
+    issueToCommitment: average(expenseMatches.filter((expense) => expense.invoiceIssueDate).map((expense) => Math.max(0, Math.round((parseDate(expense.issueDate).getTime() - parseDate(expense.invoiceIssueDate as string).getTime()) / 86400000)))),
+    commitmentToLiquidation: average(expenseMatches.filter((expense) => expense.liquidationDate).map((expense) => Math.max(0, Math.round((parseDate(expense.liquidationDate as string).getTime() - parseDate(expense.issueDate).getTime()) / 86400000)))),
+    liquidationToPayment: average(expenseMatches.filter((expense) => expense.liquidationDate && expense.paymentDate).map((expense) => Math.max(0, Math.round((parseDate(expense.paymentDate as string).getTime() - parseDate(expense.liquidationDate as string).getTime()) / 86400000)))),
+  } : undefined
   const expenseAnalysis = selected ? (() => {
     if (expenseMatches.length === 0) {
       return likelyProviders.length
@@ -262,6 +311,7 @@ export default function Home() {
     const openAmount = expenseMatches.reduce((sum, expense) => sum + expenseOpenAmount(expense), 0)
     const maxDelay = Math.max(...expenseMatches.map((expense) => expenseDelay(expense, today)))
     const allPaid = expenseMatches.every((expense) => expense.paymentDate || expenseOpenAmount(expense) === 0)
+    if (exactExpenseMatches.length === 0) return { tone: 'yellow', title: 'Prestador encontrado, escolha uma NF do CISLAV', text: `Há ${expenseMatches.length} registro(s) do prestador/documento na base CISLAV, mas nenhum bate exatamente com número e emissão informados. Selecione uma NF listada para preencher com os dados oficiais ou siga manualmente se a NF ainda não foi atualizada pelo CISLAV.` }
     if (allPaid && maxDelay === 0) return { tone: 'green', title: 'Empenhada/liquidada e paga no prazo importado', text: 'Há despesa compatível na base CISLAV e o pagamento aparece concluído sem atraso calculado pela regra de 21 dias úteis após liquidação.' }
     if (allPaid && maxDelay > 0) return { tone: 'yellow', title: 'Paga, mas com atraso operacional', text: `A despesa compatível aparece paga, porém com até ${maxDelay} dia(s) de atraso sobre a regra operacional de 21 dias úteis após liquidação.` }
     const cashLinkedTotal = selectedCashTransfers.reduce((sum, transfer) => sum + (transfer.paidAmount ?? 0), 0)
@@ -279,6 +329,24 @@ export default function Home() {
   }
   function selectAllMunicipalities() { if (selected) updateSelected('municipalityIds', seedMunicipalities.map((city) => city.id)) }
   function toggleTransferGroup(key: string) { setExpandedTransferGroups((items) => items.includes(key) ? items.filter((item) => item !== key) : [...items, key]) }
+  function useExpenseAsInvoice(expense: CislavExpense) {
+    if (!selected) return
+    setInvoices((items) => items.map((item) => item.id === selected.id ? {
+      ...item,
+      number: expense.invoiceNumber ?? item.number,
+      professionalName: expense.creditorName,
+      professionalDocument: expense.creditorDocument ?? item.professionalDocument,
+      issueDate: expense.invoiceIssueDate ?? expense.issueDate,
+      acceptedDate: expense.liquidationDate ?? expense.invoiceIssueDate ?? expense.issueDate,
+      amount: expense.liquidatedAmount ?? expense.committedAmount ?? item.amount,
+      netAmount: expense.paidAmount ?? item.netAmount,
+      paymentStatus: expense.paymentDate ? 'paid' : expenseOpenAmount(expense) > 0 ? 'partial' : item.paymentStatus,
+      paymentDate: expense.paymentDate,
+      serviceDescription: monthLabelFromHistory(expense.history) ? `Atendimentos/serviços de ${monthLabelFromHistory(expense.history)} conforme histórico CISLAV.` : expense.history,
+      notes: `Preenchido por despesa CISLAV ${expense.commitmentNumber}. Fonte de recurso ${expense.fundingSource ?? 'não informada'}.`,
+      updatedAt: new Date().toISOString(),
+    } : item))
+  }
   function addInvoice() { const id = `nf-${Date.now()}`; const invoice: Invoice = { id, number: `NF-${invoices.length + 1}`, professionalName: 'Novo profissional', issueDate: '2026-06-01', acceptedDate: '2026-06-01', contractualBusinessDays: 21, amount: 0, municipalityIds: ['lavras'], paymentStatus: 'pending', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }; setInvoices([invoice, ...invoices]); setSelectedId(id) }
   function importCsv() {
     const rows = csv.trim().split(/\n/).slice(1).map((line) => line.split(',')).filter((cols) => cols.length >= 6)
@@ -348,6 +416,11 @@ export default function Home() {
 
         {selected && <Card title="Checagem na base CISLAV" icon={<CheckSquare size={18}/>}>
           <div className={`mb-3 rounded-md p-3 text-sm ring-1 ${statusClass(expenseAnalysis?.tone ?? 'gray')}`}><strong>{expenseAnalysis?.title}:</strong> {expenseAnalysis?.text}</div>
+          {providerTimingStats && <div className="mb-3 grid gap-2 md:grid-cols-3">
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-3"><div className="text-xs font-semibold uppercase text-slate-500">Emissão até empenho</div><div className="text-lg font-bold">{providerTimingStats.issueToCommitment.toFixed(1)} dias</div></div>
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-3"><div className="text-xs font-semibold uppercase text-slate-500">Empenho até liquidação</div><div className="text-lg font-bold">{providerTimingStats.commitmentToLiquidation.toFixed(1)} dias</div></div>
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-3"><div className="text-xs font-semibold uppercase text-slate-500">Liquidação até pagamento</div><div className="text-lg font-bold">{providerTimingStats.liquidationToPayment.toFixed(1)} dias</div></div>
+          </div>}
           <div className="grid gap-3 lg:grid-cols-2">
             <div className="rounded-md border border-slate-200 bg-slate-50 p-3">
               <div className="mb-2 text-sm font-semibold text-slate-700">Prestadores prováveis assistenciais</div>
@@ -361,10 +434,13 @@ export default function Home() {
               {expenseMatches.length ? <div className="space-y-2">{expenseMatches.map((expense) => {
                 const delay = expenseDelay(expense, today)
                 const open = expenseOpenAmount(expense)
+                const exact = selected ? expenseExactMatch(expense, selected) : false
                 return <div key={expense.id} className="rounded border border-slate-200 bg-white p-2 text-xs">
-                  <div className="flex flex-wrap items-center justify-between gap-2"><strong className="text-sm">{expense.commitmentNumber}</strong><Pill tone={open > 0 ? 'red' : delay > 0 ? 'yellow' : 'green'}>{open > 0 ? 'saldo em aberto' : delay > 0 ? 'pago com atraso' : 'pago'}</Pill></div>
+                  <div className="flex flex-wrap items-center justify-between gap-2"><strong className="text-sm">{expense.commitmentNumber}</strong><div className="flex flex-wrap gap-1"><Pill tone={exact ? 'green' : 'yellow'}>{exact ? 'match da NF' : 'candidato'}</Pill><Pill tone={open > 0 ? 'red' : delay > 0 ? 'yellow' : 'green'}>{open > 0 ? 'saldo em aberto' : delay > 0 ? 'pago com atraso' : 'pago'}</Pill></div></div>
                   <div className="mt-1 text-slate-700">{expense.creditorName}</div>
                   <div className="mt-1 grid gap-1 text-slate-600 md:grid-cols-2">
+                    <span>NF: {expense.invoiceNumber ?? '-'}</span>
+                    <span>Emissão NF: {formatDate(expense.invoiceIssueDate)}</span>
                     <span>Empenho: {formatDate(expense.issueDate)}</span>
                     <span>Liquidação: {formatDate(expense.liquidationDate)}</span>
                     <span>Pagamento: {formatDate(expense.paymentDate)}</span>
@@ -373,7 +449,10 @@ export default function Home() {
                     <span>Aberto: {money.format(open)}</span>
                   </div>
                   <div className="mt-1 text-slate-600">Limite operacional: {formatDate(expenseDeadline(expense))}; atraso calculado: {delay} dia(s).</div>
-                  {expense.sourceUrl && <a className="mt-1 inline-block text-leaf underline" href={expense.sourceUrl} target="_blank">abrir fonte</a>}
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    <button onClick={() => useExpenseAsInvoice(expense)} className="focus-ring rounded-md bg-leaf px-3 py-1 text-xs font-semibold text-white">usar esta NF</button>
+                    {expense.sourceUrl && <a className="inline-block rounded-md border border-slate-300 px-3 py-1 text-leaf underline" href={expense.sourceUrl} target="_blank">abrir fonte</a>}
+                  </div>
                 </div>
               })}</div> : <p className="text-sm text-slate-600">Nenhuma despesa importada bateu com CPF/CNPJ, razão social, número da NF ou mês de emissão.</p>}
             </div>
@@ -385,8 +464,16 @@ export default function Home() {
           <div className={`mb-3 rounded-md p-3 text-sm ring-1 ${statusClass(responsibility.tone)}`}><strong>{responsibility.title}:</strong> {responsibility.text}</div>
           {penalty?.enabled ? <p>A NF {selected?.number} está com {selectedDelay?.calendar} dias de atraso. Com base registrada, estimativa: multa de <strong>{money.format(penalty.penalty)}</strong> e juros proporcionais de <strong>{money.format(penalty.interest)}</strong>.</p> : <p>O app não afirma multa ou juros sem cláusula/documento registrado. Preencha a base contratual da NF para ativar a estimativa e mantenha a conferência jurídica/documental separada do cálculo.</p>}
           <p className="mt-2 text-sm text-slate-600">{allLinkedPaid ? `As prefeituras relacionadas a esta NF aparecem em dia no mês de emissão (${selectedCashMonth}), fortalecendo o argumento administrativo de que o pagamento ao profissional não deveria estar represado por falta de repasse municipal identificado.` : `Há repasses pendentes, atrasados ou sem evidência suficiente no mês de emissão (${selectedCashMonth}). O app separa atraso do consórcio e atraso municipal para qualificar a cobrança.`}</p>
+          <div className="mt-3 rounded-md border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
+            <strong>NFs do CISLAV contra prefeituras no mês de emissão:</strong> {selectedMunicipalInvoiceEvidence.length ? `${selectedMunicipalInvoiceEvidence.length} NF(s) encontrada(s) para os municípios selecionados.` : 'nenhuma NF municipal encontrada nos dados importados para os municípios selecionados.'}
+            {selectedMunicipalitiesWithoutInvoice.length > 0 && <span className="mt-1 block text-amber-900">Sem NF municipal encontrada: {selectedMunicipalitiesWithoutInvoice.map((id) => seedMunicipalities.find((city) => city.id === id)?.name ?? id).join(', ')}. Nesses casos o app não deve tratar a prefeitura como atrasada só pela ausência de repasse.</span>}
+            {selectedMunicipalInvoiceEvidence.length > 0 && <div className="mt-2 grid gap-2 md:grid-cols-2">{selectedMunicipalInvoiceEvidence.slice(0, 6).map((nf) => <div key={`${nf.municipalityId}-${nf.commitmentNumber}-${nf.invoiceNumber}`} className="rounded border border-slate-200 bg-white p-2 text-xs">
+              <strong>{nf.municipality}</strong> · NF {nf.invoiceNumber ?? '-'} · {money.format(nf.amount)}
+              <span className="block text-slate-600">Emissão {formatDate(nf.issueDate)} · vencimento {formatDate(nf.dueDate)} · pagamento {formatDate(nf.paymentDate)}</span>
+            </div>)}</div>}
+          </div>
           <p className="mt-2 text-sm text-slate-600">Contratos de rateio analisados indicam uso para despesas administrativas/operacionais e separam procedimentos assistenciais em instrumentos próprios. Por isso, o app não presume compensação automática de recursos de uma cidade para quitar obrigação de outra sem registro formal e base documental.</p>
-          <p className="mt-2 text-sm text-slate-600">NFs do CISLAV contra prefeituras: os portais municipais podem expor esse dado dentro das despesas. Em Carrancas, a API retornou `notasFiscais` com NFSe 5792, emissão 18/05/2026, vinculada ao contrato de programa.</p>
+          <p className="mt-2 text-sm text-slate-600">NFs do CISLAV contra prefeituras: quando o portal municipal expõe `notasFiscais`, o app usa emissão, vencimento e pagamento como evidência primária. Sem NF emitida/localizada, a prefeitura não deve ser marcada como atrasada apenas pela ausência de repasse.</p>
           {divergentLinkedTransfers.length > 0 && <div className="mt-3 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-900"><strong>Divergência nos dados vinculados:</strong> {divergentLinkedTransfers.map((transfer) => transfer.divergenceNote).filter(Boolean).join(' ')}</div>}
         </Card>
 
@@ -414,7 +501,6 @@ export default function Home() {
               <div className="text-xs text-slate-600">{item.count} repasse(s): {item.dates.map((date) => formatDate(date)).join(', ')}</div>
             </div>)}
           </div>
-          <div className="mb-3 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-950">Carrancas: a API do CISLAV registra R$ 225.225,56 em maio, com R$ 4.151,48 em rateio no dia 15/05 e R$ 221.074,08 em programa no dia 29/05. A API municipal retorna o mesmo total de R$ 225.225,56 em quatro linhas, incluindo três parcelas de rateio e uma linha de programa assistencial.</div>
           <div className="overflow-x-auto"><table className="w-full min-w-[1120px] border-collapse text-sm"><thead><tr className="border-b text-left"><th className="p-2">Município</th><th>Competência</th><th>Resumo</th><th>Previsto</th><th>Pago</th><th>Limite crítico</th><th>Repasse</th><th>Status</th><th>Atraso</th><th>Fonte</th></tr></thead><tbody>{transferGroups.map((group) => { const expanded = expandedTransferGroups.includes(group.key); const groupStatus = group.rows.some((transfer) => transferStatus(transfer, today) === 'overdue') ? 'overdue' : group.rows.every((transfer) => transferStatus(transfer, today) === 'paid') ? 'paid' : 'within_deadline'; const groupDelay = Math.max(...group.rows.map((transfer) => transferDelay(transfer, today))); const strictDeadline = selected ? group.rows.map((transfer) => stricterMunicipalDeadline(transfer, selected.acceptedDate)).sort((a, b) => a.getTime() - b.getTime())[0] : undefined; return <Fragment key={group.key}><tr className={`border-b align-top ${group.divergenceNote ? 'bg-red-50/60' : ''}`}><td className="p-2"><button onClick={() => toggleTransferGroup(group.key)} className="focus-ring inline-flex items-center gap-1 rounded px-1 py-1 text-left font-semibold text-slate-800">{expanded ? <ChevronDown size={16}/> : <ChevronRight size={16}/>} {group.cityName}</button>{group.divergenceNote && <span className="mt-1 block"><Pill tone="red">divergência</Pill></span>}</td><td>{group.competence}</td><td className="max-w-[320px] pr-3 text-xs text-slate-700">{group.rows.length} repasse(s) no mês<span className="mt-1 block text-slate-500">{group.rows.map((transfer) => transferKind(transfer)).filter((kind, index, list) => list.indexOf(kind) === index).join(' + ')}</span>{group.divergenceNote && <span className="mt-1 block font-semibold text-red-800">{group.divergenceNote}</span>}</td><td>{money.format(group.expected)}</td><td>{group.paid ? money.format(group.paid) : '-'}</td><td>{formatDate(strictDeadline)}</td><td>{formatDate(group.lastPaidAt)}</td><td><Pill tone={groupStatus}>{groupStatus === 'paid' ? 'pago' : groupStatus === 'within_deadline' ? 'no prazo' : 'atrasado'}</Pill></td><td>{groupDelay} dias</td><td>{group.rows[0]?.sourceUrl ? <a className="text-leaf underline" href={group.rows[0].sourceUrl} target="_blank">abrir</a> : '-'}</td></tr>{expanded && group.rows.map((transfer) => { const status = transferStatus(transfer, today); const detailDeadline = selected ? stricterMunicipalDeadline(transfer, selected.acceptedDate) : undefined; return <tr key={transfer.id} className="border-b bg-slate-50 align-top text-xs"><td className="p-2 pl-8 text-slate-600">{group.cityName}</td><td>{transfer.competence}</td><td className="max-w-[320px] pr-3 text-slate-700">{transfer.sourceDocument}<span className="mt-1 block text-slate-500">{transfer.notes}</span></td><td>{money.format(transfer.expectedAmount ?? 0)}</td><td>{transfer.paidAmount ? money.format(transfer.paidAmount) : '-'}</td><td>{formatDate(detailDeadline)}</td><td>{formatDate(transfer.paidAt)}</td><td><Pill tone={status}>{status === 'paid' ? 'pago' : status === 'within_deadline' ? 'no prazo' : 'atrasado'}</Pill></td><td>{transferDelay(transfer, today)} dias</td><td>{transfer.sourceUrl ? <a className="text-leaf underline" href={transfer.sourceUrl} target="_blank">abrir</a> : '-'}</td></tr> })}</Fragment> })}</tbody></table></div>
         </Card>
         </>}

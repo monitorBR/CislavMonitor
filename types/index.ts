@@ -85,6 +85,19 @@ export interface CislavExpense {
   sourceUrl?: string
 }
 
+export interface MunicipalInvoiceEvidence {
+  municipalityId: string
+  municipality: string
+  competence: string
+  commitmentNumber?: string
+  invoiceNumber?: string
+  issueDate?: string
+  dueDate?: string
+  paymentDate?: string
+  amount: number
+  source: 'api_municipal' | 'importacao_csv' | 'cislav_receita'
+}
+
 export interface ContractReference {
   id: string
   title: string
