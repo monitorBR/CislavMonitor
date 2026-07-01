@@ -1,7 +1,7 @@
 'use client'
 
 import { Fragment, useEffect, useMemo, useState } from 'react'
-import { AlertTriangle, Banknote, CalendarClock, CheckCircle2, CheckSquare, ChevronDown, ChevronRight, ExternalLink, FileText, Gauge, LayoutDashboard, Plus, Scale, Upload } from 'lucide-react'
+import { AlertTriangle, Banknote, CalendarClock, CheckCircle2, CheckSquare, ChevronDown, ChevronRight, ExternalLink, FileText, Gauge, LayoutDashboard, Plus, Scale, Search, Upload } from 'lucide-react'
 import { average, invoiceDelay, invoiceTone, penaltyEstimate, riskLevel, stricterMunicipalDeadline, transferDelay, transferStatus } from '@/lib/calculations'
 import { assistanceProviders, cislavExpenses, contracts as seedContracts, invoices as seedInvoices, municipalities as seedMunicipalities, publicSources, transfers as seedTransfers } from '@/lib/sample-data'
 import { historicalGeneratedAt, historicalSummaries } from '@/lib/historical-data'
@@ -168,6 +168,7 @@ export default function Home() {
   const [selectedYear, setSelectedYear] = useState('ultimos12')
   const [selectedMonth, setSelectedMonth] = useState('todos')
   const [expandedTransferGroups, setExpandedTransferGroups] = useState<string[]>([])
+  const [providerSearchFeedback, setProviderSearchFeedback] = useState('')
 
   useEffect(() => {
     const stored = localStorage.getItem('cislav-monitor-state')
@@ -347,6 +348,22 @@ export default function Home() {
       updatedAt: new Date().toISOString(),
     } : item))
   }
+  function searchProviderByDocument() {
+    if (!selected) return
+    const document = normalizeDocument(selected.professionalDocument)
+    if (!document) {
+      setProviderSearchFeedback('Informe o CPF/CNPJ do prestador para buscar na base importada.')
+      return
+    }
+    const provider = assistanceProviders.find((item) => normalizeDocument(item.document) === document)
+    const expenses = cislavExpenses.filter((item) => normalizeDocument(item.creditorDocument) === document)
+    if (provider && (!selected.professionalName || selected.professionalName === 'Profissional de saúde' || selected.professionalName === 'Novo profissional')) {
+      updateSelected('professionalName', provider.name)
+    }
+    const providerText = provider ? `prestador identificado: ${provider.name}` : 'prestador ainda não identificado na lista provável'
+    const expenseText = expenses.length ? `${expenses.length} NF/despesa do CISLAV encontrada(s) para este documento` : 'nenhuma despesa do CISLAV encontrada para este documento'
+    setProviderSearchFeedback(`${providerText}; ${expenseText}. Confira os candidatos na seção de checagem abaixo.`)
+  }
   function addInvoice() { const id = `nf-${Date.now()}`; const invoice: Invoice = { id, number: `NF-${invoices.length + 1}`, professionalName: 'Novo profissional', issueDate: '2026-06-01', acceptedDate: '2026-06-01', contractualBusinessDays: 21, amount: 0, municipalityIds: ['lavras'], paymentStatus: 'pending', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }; setInvoices([invoice, ...invoices]); setSelectedId(id) }
   function importCsv() {
     const rows = csv.trim().split(/\n/).slice(1).map((line) => line.split(',')).filter((cols) => cols.length >= 6)
@@ -384,7 +401,13 @@ export default function Home() {
         {selected && <Card title="Detalhes e cálculo da NF" icon={<FileText size={18}/>}>
           <div className="grid gap-3 md:grid-cols-3">
             <label className="text-sm">Número<input className="mt-1 w-full rounded-md border p-2" value={selected.number} onChange={(e) => updateSelected('number', e.target.value)}/></label>
-            <label className="text-sm">CPF/CNPJ do prestador<input className="mt-1 w-full rounded-md border p-2" value={selected.professionalDocument ?? ''} onChange={(e) => updateSelected('professionalDocument', e.target.value)} placeholder="somente números ou formatado"/></label>
+            <label className="text-sm">CPF/CNPJ do prestador
+              <div className="mt-1 flex gap-2">
+                <input className="min-w-0 flex-1 rounded-md border p-2" value={selected.professionalDocument ?? ''} onChange={(e) => { updateSelected('professionalDocument', e.target.value); setProviderSearchFeedback('') }} placeholder="somente números ou formatado"/>
+                <button type="button" onClick={searchProviderByDocument} className="focus-ring inline-flex items-center gap-2 rounded-md bg-ink px-3 py-2 text-sm font-semibold text-white"><Search size={16}/>Buscar</button>
+              </div>
+              {providerSearchFeedback && <span className="mt-1 block text-xs text-slate-600">{providerSearchFeedback}</span>}
+            </label>
             <label className="text-sm">Prestador<input className="mt-1 w-full rounded-md border p-2" value={selected.professionalName} onChange={(e) => updateSelected('professionalName', e.target.value)} placeholder="Razão social ou nome"/></label>
             <label className="text-sm">Emissão<input type="date" className="mt-1 w-full rounded-md border p-2" value={selected.issueDate} onChange={(e) => updateSelected('issueDate', e.target.value)}/></label>
             <label className="text-sm">Aceite<input type="date" className="mt-1 w-full rounded-md border p-2" value={selected.acceptedDate} onChange={(e) => updateSelected('acceptedDate', e.target.value)}/></label>
