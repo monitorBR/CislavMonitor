@@ -31,10 +31,47 @@ const historicalMonths = Array.from({ length: 29 }, (_, index) => {
 })
 const years = ['todos', '2024', '2025', '2026']
 const monthOptions = ['todos', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-const historicalCityIds = new Set(historicalSummaries.map((item) => item.municipalityId))
+const municipalityAliases: Record<string, { id: string; name: string }> = {
+  'lavras-mg': { id: 'lavras', name: 'LAVRAS' },
+  'ribeiraao-vermelho': { id: 'ribeirao-vermelho', name: 'RIBEIRÃO VERMELHO' },
+  'riberao-vemelho': { id: 'ribeirao-vermelho', name: 'RIBEIRÃO VERMELHO' },
+}
+const normalizedHistoricalSummaries = Array.from(historicalSummaries.reduce((map, city) => {
+  const canonical = municipalityAliases[city.municipalityId] ?? { id: city.municipalityId, name: city.municipality }
+  const merged = map.get(canonical.id) ?? { municipalityId: canonical.id, municipality: canonical.name, months: {} }
+  for (const [monthKey, month] of Object.entries(city.months)) {
+    const entry = merged.months[monthKey] ??= {
+      month: month.month,
+      cislavTotal: 0,
+      municipalTotal: 0,
+      rateioTotal: 0,
+      assistentialTotal: 0,
+      rateioDelayDays: 0,
+      assistentialDelayDays: 0,
+      rateioRows: 0,
+      assistentialRows: 0,
+      nfs: [],
+      sourceStatus: 'cislav_apenas' as const,
+    }
+    entry.cislavTotal = Number((entry.cislavTotal + month.cislavTotal).toFixed(2))
+    entry.municipalTotal = Number((entry.municipalTotal + month.municipalTotal).toFixed(2))
+    entry.rateioTotal = Number((entry.rateioTotal + month.rateioTotal).toFixed(2))
+    entry.assistentialTotal = Number((entry.assistentialTotal + month.assistentialTotal).toFixed(2))
+    entry.rateioDelayDays += month.rateioDelayDays
+    entry.assistentialDelayDays += month.assistentialDelayDays
+    entry.rateioRows += month.rateioRows
+    entry.assistentialRows += month.assistentialRows
+    entry.nfs.push(...month.nfs)
+    entry.difference = Number((entry.municipalTotal - entry.cislavTotal).toFixed(2))
+    entry.sourceStatus = entry.municipalTotal ? (Math.abs(entry.difference) < 0.01 ? 'conciliado' : 'divergente') : 'cislav_apenas'
+  }
+  map.set(canonical.id, merged)
+  return map
+}, new Map<string, (typeof historicalSummaries)[number]>()).values()).sort((a, b) => a.municipality.localeCompare(b.municipality, 'pt-BR'))
+const historicalCityIds = new Set(normalizedHistoricalSummaries.map((item) => item.municipalityId))
 const dashboardMunicipalities = [
   ...seedMunicipalities,
-  ...historicalSummaries.filter((item) => !seedMunicipalities.some((city) => city.id === item.municipalityId)).map((item) => ({ id: item.municipalityId, name: item.municipality, state: 'MG' })),
+  ...normalizedHistoricalSummaries.filter((item) => !seedMunicipalities.some((city) => city.id === item.municipalityId)).map((item) => ({ id: item.municipalityId, name: item.municipality, state: 'MG' })),
 ].filter((city) => historicalCityIds.has(city.id) || seedMunicipalities.some((item) => item.id === city.id))
 
 function transferKind(transfer: MunicipalityTransfer) {
@@ -107,7 +144,7 @@ export default function Home() {
   const monthlyCityStatus = useMemo(() => {
     const visibleMonths = historicalMonths.filter((month) => (selectedYear === 'todos' || month.startsWith(selectedYear)) && (selectedMonth === 'todos' || month.endsWith(`-${selectedMonth}`)))
     return dashboardMunicipalities.map((city) => {
-      const historical = historicalSummaries.find((item) => item.municipalityId === city.id)
+      const historical = normalizedHistoricalSummaries.find((item) => item.municipalityId === city.id)
       const months = visibleMonths.map((month) => {
         const item = historical?.months[month]
         if (!item) return { month, rateioStatus: 'sem dado', assistentialStatus: 'sem dado', assistentialTotalDelay: 0, rateioCount: 0, assistentialCount: 0, sourceStatus: 'sem dado' }
@@ -248,9 +285,9 @@ export default function Home() {
         {activeTab === 'prefeituras' && <>
         <div className="grid gap-4 md:grid-cols-4">
           <Card title="Prefeituras" icon={<LayoutDashboard size={18}/>}><div className="text-2xl font-bold">{dashboardMunicipalities.length}</div><p className="text-sm text-slate-600">municípios no histórico</p></Card>
-          <Card title="Meses" icon={<CalendarClock size={18}/>}><div className="text-2xl font-bold">{historicalSummaries.reduce((sum, city) => sum + Object.keys(city.months).length, 0)}</div><p className="text-sm text-slate-600">município/mês importados</p></Card>
+          <Card title="Meses" icon={<CalendarClock size={18}/>}><div className="text-2xl font-bold">{normalizedHistoricalSummaries.reduce((sum, city) => sum + Object.keys(city.months).length, 0)}</div><p className="text-sm text-slate-600">município/mês importados</p></Card>
           <Card title="Importado em" icon={<FileText size={18}/>}><div className="text-lg font-bold">{formatDate(historicalGeneratedAt.slice(0, 10))}</div><p className="text-sm text-slate-600">CISLAV + APIs municipais</p></Card>
-          <Card title="Sem conciliação" icon={<AlertTriangle size={18}/>}><div className="text-2xl font-bold">{historicalSummaries.reduce((sum, city) => sum + Object.values(city.months).filter((month) => month.sourceStatus === 'cislav_apenas').length, 0)}</div><p className="text-sm text-slate-600">município/mês só CISLAV</p></Card>
+          <Card title="Sem conciliação" icon={<AlertTriangle size={18}/>}><div className="text-2xl font-bold">{normalizedHistoricalSummaries.reduce((sum, city) => sum + Object.values(city.months).filter((month) => month.sourceStatus === 'cislav_apenas').length, 0)}</div><p className="text-sm text-slate-600">município/mês só CISLAV</p></Card>
         </div>
         <Card title="Status mensal por prefeitura desde 2024" icon={<LayoutDashboard size={18}/>}>
           <div className="mb-3 flex flex-wrap items-end gap-3">
