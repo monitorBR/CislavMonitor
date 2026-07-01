@@ -10,7 +10,7 @@ import type { Invoice, MunicipalityTransfer } from '@/types'
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 const today = new Date()
-const stateVersion = '2026-06-cash-impact-by-issue-month'
+const stateVersion = '2026-07-carrancas-api-only'
 const municipalAudit = [
   { id: 'carrancas', status: 'conciliado', source: 'API municipal validada', nfCount: 1, note: 'NFSe 5792 encontrada.' },
   { id: 'ibituruna', status: 'conciliado', source: 'API municipal validada', nfCount: 4, note: 'NFs 5719 e 5734 encontradas.' },
