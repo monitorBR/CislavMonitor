@@ -54,6 +54,37 @@ export interface MunicipalityTransfer {
   updatedAt: string
 }
 
+export interface AssistanceProvider {
+  id: string
+  name: string
+  document?: string
+  city?: string
+  source: 'relatorio_fornecedores_ativos' | 'despesa_cislav' | 'manual'
+  evidence: string
+  confidence: 'alta' | 'media' | 'baixa'
+  activeOn?: string
+}
+
+export interface CislavExpense {
+  id: string
+  commitmentNumber: string
+  creditorName: string
+  creditorDocument?: string
+  type: string
+  biddingProcess?: string
+  fundingSource?: string
+  issueDate: string
+  liquidationDate?: string
+  paymentDate?: string
+  committedAmount?: number
+  liquidatedAmount?: number
+  paidAmount?: number
+  invoiceNumber?: string
+  invoiceIssueDate?: string
+  history?: string
+  sourceUrl?: string
+}
+
 export interface ContractReference {
   id: string
   title: string

@@ -3,10 +3,10 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { AlertTriangle, Banknote, CalendarClock, CheckCircle2, CheckSquare, ChevronDown, ChevronRight, ExternalLink, FileText, Gauge, LayoutDashboard, Plus, Scale, Upload } from 'lucide-react'
 import { average, invoiceDelay, invoiceTone, penaltyEstimate, riskLevel, stricterMunicipalDeadline, transferDelay, transferStatus } from '@/lib/calculations'
-import { contracts as seedContracts, invoices as seedInvoices, municipalities as seedMunicipalities, publicSources, transfers as seedTransfers } from '@/lib/sample-data'
+import { assistanceProviders, cislavExpenses, contracts as seedContracts, invoices as seedInvoices, municipalities as seedMunicipalities, publicSources, transfers as seedTransfers } from '@/lib/sample-data'
 import { historicalGeneratedAt, historicalSummaries } from '@/lib/historical-data'
-import { formatDate } from '@/lib/date-utils'
-import type { Invoice, MunicipalityTransfer } from '@/types'
+import { calculateBusinessDeadline, formatDate, overdueDays, parseDate } from '@/lib/date-utils'
+import type { AssistanceProvider, CislavExpense, Invoice, MunicipalityTransfer } from '@/types'
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 const today = new Date()
@@ -88,6 +88,47 @@ function previousMonth(month: string) {
   const date = new Date(`${month}-01T00:00:00`)
   date.setMonth(date.getMonth() - 1)
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+}
+
+function normalizeText(value = '') {
+  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toUpperCase()
+}
+
+function normalizeDocument(value = '') {
+  return value.replace(/\D/g, '')
+}
+
+function expenseDeadline(expense: CislavExpense) {
+  const baseDate = expense.liquidationDate ?? expense.issueDate
+  return calculateBusinessDeadline(parseDate(baseDate), 21)
+}
+
+function expenseOpenAmount(expense: CislavExpense) {
+  return Math.max(0, (expense.liquidatedAmount ?? expense.committedAmount ?? 0) - (expense.paidAmount ?? 0))
+}
+
+function expenseDelay(expense: CislavExpense, reference = new Date()) {
+  const comparison = expense.paymentDate ? parseDate(expense.paymentDate) : reference
+  return overdueDays(expenseDeadline(expense), comparison)
+}
+
+function providerMatchesInvoice(provider: AssistanceProvider, invoice: Invoice) {
+  const invoiceDocument = normalizeDocument(invoice.professionalDocument)
+  if (invoiceDocument && normalizeDocument(provider.document) === invoiceDocument) return true
+  const providerName = normalizeText(provider.name)
+  const invoiceName = normalizeText(invoice.professionalName)
+  return invoiceName.length >= 6 && (providerName.includes(invoiceName) || invoiceName.includes(providerName))
+}
+
+function expenseMatchesInvoice(expense: CislavExpense, invoice: Invoice) {
+  const invoiceDocument = normalizeDocument(invoice.professionalDocument)
+  if (invoiceDocument && normalizeDocument(expense.creditorDocument) === invoiceDocument) return true
+  const creditor = normalizeText(expense.creditorName)
+  const professional = normalizeText(invoice.professionalName)
+  const nameMatch = professional.length >= 6 && (creditor.includes(professional) || professional.includes(creditor))
+  const numberMatch = invoice.number && expense.invoiceNumber === invoice.number
+  const issueMatch = !expense.invoiceIssueDate || expense.invoiceIssueDate === invoice.issueDate || monthFromDate(expense.issueDate) === monthFromDate(invoice.issueDate)
+  return Boolean((nameMatch || numberMatch) && issueMatch)
 }
 
 function statusClass(tone: string) {
@@ -204,6 +245,31 @@ export default function Home() {
       ? { tone: 'yellow', title: 'Responsabilidade provável compartilhada', text: `Há atraso da NF e ${delayedLinkedTransfers.length} repasse(s) vinculado(s) também aparecem atrasados ou sem pagamento. Possíveis responsáveis: municípios vinculados com pendência e CISLAV pela gestão/repasse ao profissional.` }
       : { tone: 'red', title: 'Responsabilidade provável do CISLAV', text: 'A NF está atrasada e os repasses dos municípios selecionados aparecem pagos ou sem atraso cadastrado. Com os dados disponíveis, o gargalo fica no CISLAV.' }
     : { tone: 'green', title: 'Sem atraso da NF selecionada', text: 'A NF selecionada não está vencida pelos parâmetros cadastrados.' }
+  const providerMatches = selected ? assistanceProviders.filter((provider) => providerMatchesInvoice(provider, selected)).slice(0, 5) : []
+  const likelyProviders = selected && providerMatches.length === 0
+    ? assistanceProviders.filter((provider) => {
+      const professional = normalizeText(selected.professionalName)
+      return professional.length >= 3 && normalizeText(provider.name).includes(professional.slice(0, 10))
+    }).slice(0, 5)
+    : providerMatches
+  const expenseMatches = selected ? cislavExpenses.filter((expense) => expenseMatchesInvoice(expense, selected)) : []
+  const expenseAnalysis = selected ? (() => {
+    if (expenseMatches.length === 0) {
+      return likelyProviders.length
+        ? { tone: 'yellow', title: 'Prestador provável, sem empenho localizado', text: 'O nome/documento parece compatível com a lista de prestadores assistenciais, mas ainda não há despesa importada do CISLAV que bata com a NF informada. Possível causa: NF ainda não empenhada/liquidada ou base de despesas incompleta.' }
+        : { tone: 'gray', title: 'Sem evidência na base importada', text: 'Não há prestador provável nem despesa do CISLAV compatível com os dados informados. Confira CPF/CNPJ, razão social e número da NF, ou importe o analítico de despesas do período.' }
+    }
+    const openAmount = expenseMatches.reduce((sum, expense) => sum + expenseOpenAmount(expense), 0)
+    const maxDelay = Math.max(...expenseMatches.map((expense) => expenseDelay(expense, today)))
+    const allPaid = expenseMatches.every((expense) => expense.paymentDate || expenseOpenAmount(expense) === 0)
+    if (allPaid && maxDelay === 0) return { tone: 'green', title: 'Empenhada/liquidada e paga no prazo importado', text: 'Há despesa compatível na base CISLAV e o pagamento aparece concluído sem atraso calculado pela regra de 21 dias úteis após liquidação.' }
+    if (allPaid && maxDelay > 0) return { tone: 'yellow', title: 'Paga, mas com atraso operacional', text: `A despesa compatível aparece paga, porém com até ${maxDelay} dia(s) de atraso sobre a regra operacional de 21 dias úteis após liquidação.` }
+    const cashLinkedTotal = selectedCashTransfers.reduce((sum, transfer) => sum + (transfer.paidAmount ?? 0), 0)
+    const likelyCause = cashLinkedTotal >= selected.amount && delayedLinkedTransfers.length === 0
+      ? 'Os repasses municipais vinculados ao mês de emissão parecem suficientes/pagos; o motivo provável fica no fluxo interno do CISLAV, ordem de pagamento, saldo por fonte ou priorização administrativa.'
+      : 'Há repasses municipais insuficientes, atrasados ou sem conciliação no mês de emissão; o atraso pode estar ligado à entrada de caixa assistencial, mas precisa respeitar a fonte de recurso.'
+    return { tone: 'red', title: 'Empenhada/liquidada, mas com saldo em aberto', text: `Há ${money.format(openAmount)} em aberto nos registros compatíveis. ${likelyCause}` }
+  })() : undefined
 
   function updateSelected<K extends keyof Invoice>(key: K, value: Invoice[K]) { if (!selected) return; setInvoices((items) => items.map((item) => item.id === selected.id ? { ...item, [key]: value, updatedAt: new Date().toISOString() } : item)) }
   function toggleMunicipality(municipalityId: string) {
@@ -250,6 +316,9 @@ export default function Home() {
         {selected && <Card title="Detalhes e cálculo da NF" icon={<FileText size={18}/>}>
           <div className="grid gap-3 md:grid-cols-3">
             <label className="text-sm">Número<input className="mt-1 w-full rounded-md border p-2" value={selected.number} onChange={(e) => updateSelected('number', e.target.value)}/></label>
+            <label className="text-sm">CPF/CNPJ do prestador<input className="mt-1 w-full rounded-md border p-2" value={selected.professionalDocument ?? ''} onChange={(e) => updateSelected('professionalDocument', e.target.value)} placeholder="somente números ou formatado"/></label>
+            <label className="text-sm">Prestador<input className="mt-1 w-full rounded-md border p-2" value={selected.professionalName} onChange={(e) => updateSelected('professionalName', e.target.value)} placeholder="Razão social ou nome"/></label>
+            <label className="text-sm">Emissão<input type="date" className="mt-1 w-full rounded-md border p-2" value={selected.issueDate} onChange={(e) => updateSelected('issueDate', e.target.value)}/></label>
             <label className="text-sm">Aceite<input type="date" className="mt-1 w-full rounded-md border p-2" value={selected.acceptedDate} onChange={(e) => updateSelected('acceptedDate', e.target.value)}/></label>
             <label className="text-sm">Valor<input type="number" className="mt-1 w-full rounded-md border p-2" value={selected.amount} onChange={(e) => updateSelected('amount', Number(e.target.value))}/></label>
             <label className="text-sm">Prazo em dias úteis<input type="number" className="mt-1 w-full rounded-md border p-2" value={selected.contractualBusinessDays} onChange={(e) => updateSelected('contractualBusinessDays', Number(e.target.value))}/></label>
@@ -275,6 +344,41 @@ export default function Home() {
           </div>
           <div className="mt-4 rounded-md bg-panel p-4 text-sm"><strong>Linha do tempo:</strong> NF emitida em {formatDate(selected.issueDate)}; aceita em {formatDate(selected.acceptedDate)}; contagem inicia no próximo dia útil; limite em {formatDate(selectedDelay?.deadline)}. {selectedTone?.message}</div>
           <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Competência e caixa:</strong> a NFSe emitida em {selectedCashMonth} representa atendimentos de {selectedServiceMonth}, mas o risco de fluxo de caixa é comparado com os repasses de {selectedCashMonth}, mês em que a NFSe entrou para cobrança. O aceite define apenas o prazo de pagamento ao profissional.</div>
+        </Card>}
+
+        {selected && <Card title="Checagem na base CISLAV" icon={<CheckSquare size={18}/>}>
+          <div className={`mb-3 rounded-md p-3 text-sm ring-1 ${statusClass(expenseAnalysis?.tone ?? 'gray')}`}><strong>{expenseAnalysis?.title}:</strong> {expenseAnalysis?.text}</div>
+          <div className="grid gap-3 lg:grid-cols-2">
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-3">
+              <div className="mb-2 text-sm font-semibold text-slate-700">Prestadores prováveis assistenciais</div>
+              {likelyProviders.length ? <div className="space-y-2">{likelyProviders.map((provider) => <div key={provider.id} className="rounded border border-slate-200 bg-white p-2 text-xs">
+                <div className="flex items-center justify-between gap-2"><strong className="text-sm">{provider.name}</strong><Pill tone={provider.confidence === 'alta' ? 'green' : provider.confidence === 'media' ? 'yellow' : 'gray'}>{provider.confidence}</Pill></div>
+                <div className="mt-1 text-slate-600">{provider.city ? `${provider.city} · ` : ''}{provider.evidence}</div>
+              </div>)}</div> : <p className="text-sm text-slate-600">Nenhum prestador provável encontrado com os dados atuais.</p>}
+            </div>
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-3">
+              <div className="mb-2 text-sm font-semibold text-slate-700">Despesas CISLAV compatíveis</div>
+              {expenseMatches.length ? <div className="space-y-2">{expenseMatches.map((expense) => {
+                const delay = expenseDelay(expense, today)
+                const open = expenseOpenAmount(expense)
+                return <div key={expense.id} className="rounded border border-slate-200 bg-white p-2 text-xs">
+                  <div className="flex flex-wrap items-center justify-between gap-2"><strong className="text-sm">{expense.commitmentNumber}</strong><Pill tone={open > 0 ? 'red' : delay > 0 ? 'yellow' : 'green'}>{open > 0 ? 'saldo em aberto' : delay > 0 ? 'pago com atraso' : 'pago'}</Pill></div>
+                  <div className="mt-1 text-slate-700">{expense.creditorName}</div>
+                  <div className="mt-1 grid gap-1 text-slate-600 md:grid-cols-2">
+                    <span>Empenho: {formatDate(expense.issueDate)}</span>
+                    <span>Liquidação: {formatDate(expense.liquidationDate)}</span>
+                    <span>Pagamento: {formatDate(expense.paymentDate)}</span>
+                    <span>Fonte: {expense.fundingSource ?? '-'}</span>
+                    <span>Pago: {money.format(expense.paidAmount ?? 0)}</span>
+                    <span>Aberto: {money.format(open)}</span>
+                  </div>
+                  <div className="mt-1 text-slate-600">Limite operacional: {formatDate(expenseDeadline(expense))}; atraso calculado: {delay} dia(s).</div>
+                  {expense.sourceUrl && <a className="mt-1 inline-block text-leaf underline" href={expense.sourceUrl} target="_blank">abrir fonte</a>}
+                </div>
+              })}</div> : <p className="text-sm text-slate-600">Nenhuma despesa importada bateu com CPF/CNPJ, razão social, número da NF ou mês de emissão.</p>}
+            </div>
+          </div>
+          <p className="mt-3 text-sm text-slate-600">Esta checagem usa uma base inicial. O ideal é o cron importar diariamente o relatório de despesas do CISLAV e preencher CPF/CNPJ, NF e histórico quando o portal disponibilizar esses campos na lupa/detalhe.</p>
         </Card>}
 
         <Card title="Multa, juros e obrigações" icon={<Scale size={18}/>}>
