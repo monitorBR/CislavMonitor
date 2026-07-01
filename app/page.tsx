@@ -10,7 +10,7 @@ import type { Invoice, MunicipalityTransfer } from '@/types'
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 const today = new Date()
-const stateVersion = '2026-05-municipality-scope-responsibility'
+const stateVersion = '2026-06-cash-impact-by-issue-month'
 const municipalAudit = [
   { id: 'carrancas', status: 'conciliado', source: 'API municipal validada', nfCount: 1, note: 'NFSe 5792 encontrada.' },
   { id: 'ibituruna', status: 'conciliado', source: 'API municipal validada', nfCount: 4, note: 'NFs 5719 e 5734 encontradas.' },
@@ -43,6 +43,16 @@ function transferKind(transfer: MunicipalityTransfer) {
   return 'assistencial'
 }
 
+function monthFromDate(date: string) {
+  return date.slice(0, 7)
+}
+
+function previousMonth(month: string) {
+  const date = new Date(`${month}-01T00:00:00`)
+  date.setMonth(date.getMonth() - 1)
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+}
+
 function statusClass(tone: string) {
   if (tone === 'red' || tone === 'overdue' || tone === 'critico') return 'bg-red-50 text-red-800 ring-red-200'
   if (tone === 'yellow' || tone === 'within_deadline' || tone === 'alto' || tone === 'moderado') return 'bg-amber-50 text-amber-900 ring-amber-200'
@@ -73,7 +83,10 @@ export default function Home() {
   useEffect(() => { localStorage.setItem('cislav-monitor-state', JSON.stringify({ version: stateVersion, invoices, transfers })) }, [invoices, transfers])
 
   const selected = invoices.find((invoice) => invoice.id === selectedId) ?? invoices[0]
+  const selectedCashMonth = selected ? monthFromDate(selected.issueDate) : ''
+  const selectedServiceMonth = selectedCashMonth ? previousMonth(selectedCashMonth) : ''
   const selectedTransfers = selected ? transfers.filter((transfer) => selected.municipalityIds.includes(transfer.municipalityId)) : []
+  const selectedCashTransfers = selected ? selectedTransfers.filter((transfer) => transfer.competence === selectedCashMonth) : []
   const metrics = useMemo(() => {
     const nfDelays = invoices.map((invoice) => invoiceDelay(invoice, today).calendar).filter((days) => days > 0)
     const transferDelays = transfers.map((transfer) => transferDelay(transfer, today))
@@ -113,10 +126,10 @@ export default function Home() {
   const selectedDelay = selected ? invoiceDelay(selected, today) : undefined
   const selectedTone = selected ? invoiceTone(selected, today) : undefined
   const penalty = selected ? penaltyEstimate(selected, today) : undefined
-  const allLinkedPaid = selectedTransfers.length > 0 && selectedTransfers.every((transfer) => transferStatus(transfer, today) === 'paid')
+  const allLinkedPaid = selectedCashTransfers.length > 0 && selectedCashTransfers.every((transfer) => transferStatus(transfer, today) === 'paid')
   const selectedMunicipalityNames = selected?.municipalityIds.map((id) => seedMunicipalities.find((city) => city.id === id)?.name ?? id) ?? []
-  const delayedLinkedTransfers = selectedTransfers.filter((transfer) => transferStatus(transfer, today) === 'overdue')
-  const divergentLinkedTransfers = selectedTransfers.filter((transfer) => transfer.divergenceNote)
+  const delayedLinkedTransfers = selectedCashTransfers.filter((transfer) => transferStatus(transfer, today) === 'overdue')
+  const divergentLinkedTransfers = selectedCashTransfers.filter((transfer) => transfer.divergenceNote)
   const responsibility = selectedDelay && selected && selectedDelay.calendar > 0 && selected.paymentStatus !== 'paid'
     ? delayedLinkedTransfers.length > 0
       ? { tone: 'yellow', title: 'Responsabilidade provável compartilhada', text: `Há atraso da NF e ${delayedLinkedTransfers.length} repasse(s) vinculado(s) também aparecem atrasados ou sem pagamento. Possíveis responsáveis: municípios vinculados com pendência e CISLAV pela gestão/repasse ao profissional.` }
@@ -191,13 +204,13 @@ export default function Home() {
             <div className="mt-2 text-xs text-slate-600">Selecionados: {selectedMunicipalityNames.join(', ')}</div>
           </div>
           <div className="mt-4 rounded-md bg-panel p-4 text-sm"><strong>Linha do tempo:</strong> NF emitida em {formatDate(selected.issueDate)}; aceita em {formatDate(selected.acceptedDate)}; contagem inicia no próximo dia útil; limite em {formatDate(selectedDelay?.deadline)}. {selectedTone?.message}</div>
-          <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Competência maio:</strong> o app trata NFs emitidas em maio como obrigação que pode vencer em junho quando a regra da NF for 21 dias úteis. Para repasses municipais, compara também o último dia útil da competência e a regra contratual encontrada nos contratos de programa 2026: 15 dias corridos após prestação/recebimento da NF pelo município.</div>
+          <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Competência e caixa:</strong> a NFSe emitida em {selectedCashMonth} representa atendimentos de {selectedServiceMonth}, mas o risco de fluxo de caixa é comparado com os repasses de {selectedCashMonth}, mês em que a NFSe entrou para cobrança. O aceite define apenas o prazo de pagamento ao profissional.</div>
         </Card>}
 
         <Card title="Multa, juros e obrigações" icon={<Scale size={18}/>}>
           <div className={`mb-3 rounded-md p-3 text-sm ring-1 ${statusClass(responsibility.tone)}`}><strong>{responsibility.title}:</strong> {responsibility.text}</div>
           {penalty?.enabled ? <p>A NF {selected?.number} está com {selectedDelay?.calendar} dias de atraso. Com base registrada, estimativa: multa de <strong>{money.format(penalty.penalty)}</strong> e juros proporcionais de <strong>{money.format(penalty.interest)}</strong>.</p> : <p>O app não afirma multa ou juros sem cláusula/documento registrado. Preencha a base contratual da NF para ativar a estimativa e mantenha a conferência jurídica/documental separada do cálculo.</p>}
-          <p className="mt-2 text-sm text-slate-600">{allLinkedPaid ? 'As prefeituras relacionadas a esta NF aparecem em dia, fortalecendo o argumento administrativo de que o pagamento ao profissional não deveria estar represado por falta de repasse municipal identificado.' : 'Há repasses pendentes, atrasados ou sem evidência suficiente. O app separa atraso do consórcio e atraso municipal para qualificar a cobrança.'}</p>
+          <p className="mt-2 text-sm text-slate-600">{allLinkedPaid ? `As prefeituras relacionadas a esta NF aparecem em dia no mês de emissão (${selectedCashMonth}), fortalecendo o argumento administrativo de que o pagamento ao profissional não deveria estar represado por falta de repasse municipal identificado.` : `Há repasses pendentes, atrasados ou sem evidência suficiente no mês de emissão (${selectedCashMonth}). O app separa atraso do consórcio e atraso municipal para qualificar a cobrança.`}</p>
           <p className="mt-2 text-sm text-slate-600">Contratos de rateio analisados indicam uso para despesas administrativas/operacionais e separam procedimentos assistenciais em instrumentos próprios. Por isso, o app não presume compensação automática de recursos de uma cidade para quitar obrigação de outra sem registro formal e base documental.</p>
           <p className="mt-2 text-sm text-slate-600">NFs do CISLAV contra prefeituras: os portais municipais podem expor esse dado dentro das despesas. Em Carrancas, a API retornou `notasFiscais` com NFSe 5792, emissão 18/05/2026, vinculada ao contrato de programa.</p>
           {divergentLinkedTransfers.length > 0 && <div className="mt-3 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-900"><strong>Divergência nos dados vinculados:</strong> {divergentLinkedTransfers.map((transfer) => transfer.divergenceNote).filter(Boolean).join(' ')}</div>}
