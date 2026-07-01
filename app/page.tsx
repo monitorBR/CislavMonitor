@@ -29,7 +29,7 @@ const historicalMonths = Array.from({ length: 29 }, (_, index) => {
   const date = new Date(2024, index, 1)
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
 })
-const years = ['todos', '2024', '2025', '2026']
+const years = ['ultimos12', 'todos', '2024', '2025', '2026']
 const monthOptions = ['todos', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 const municipalityAliases: Record<string, { id: string; name: string }> = {
   'lavras-mg': { id: 'lavras', name: 'LAVRAS' },
@@ -105,7 +105,7 @@ export default function Home() {
   const [selectedId, setSelectedId] = useState(seedInvoices[0]?.id ?? '')
   const [csv, setCsv] = useState('')
   const [activeTab, setActiveTab] = useState<'nfse' | 'prefeituras'>('nfse')
-  const [selectedYear, setSelectedYear] = useState('todos')
+  const [selectedYear, setSelectedYear] = useState('ultimos12')
   const [selectedMonth, setSelectedMonth] = useState('todos')
   const [expandedTransferGroups, setExpandedTransferGroups] = useState<string[]>([])
 
@@ -173,7 +173,8 @@ export default function Home() {
     return Array.from(groups.values()).sort((a, b) => (a.firstPaidAt ?? a.competence).localeCompare(b.firstPaidAt ?? b.competence) || a.cityName.localeCompare(b.cityName, 'pt-BR'))
   }, [transfers])
   const monthlyCityStatus = useMemo(() => {
-    const visibleMonths = historicalMonths.filter((month) => (selectedYear === 'todos' || month.startsWith(selectedYear)) && (selectedMonth === 'todos' || month.endsWith(`-${selectedMonth}`)))
+    const periodMonths = selectedYear === 'ultimos12' ? historicalMonths.slice(-12) : historicalMonths
+    const visibleMonths = periodMonths.filter((month) => (selectedYear === 'ultimos12' || selectedYear === 'todos' || month.startsWith(selectedYear)) && (selectedMonth === 'todos' || month.endsWith(`-${selectedMonth}`)))
     return dashboardMunicipalities.map((city) => {
       const historical = normalizedHistoricalSummaries.find((item) => item.municipalityId === city.id)
       const months = visibleMonths.map((month) => {
@@ -323,7 +324,7 @@ export default function Home() {
         </div>
         <Card title="Status mensal por prefeitura desde 2024" icon={<LayoutDashboard size={18}/>}>
           <div className="mb-3 flex flex-wrap items-end gap-3">
-            <label className="text-sm font-semibold text-slate-700">Ano<select className="mt-1 block rounded-md border border-slate-300 bg-white px-3 py-2 text-sm" value={selectedYear} onChange={(event) => setSelectedYear(event.target.value)}>{years.map((year) => <option key={year} value={year}>{year === 'todos' ? 'Todos' : year}</option>)}</select></label>
+            <label className="text-sm font-semibold text-slate-700">Período<select className="mt-1 block rounded-md border border-slate-300 bg-white px-3 py-2 text-sm" value={selectedYear} onChange={(event) => setSelectedYear(event.target.value)}>{years.map((year) => <option key={year} value={year}>{year === 'ultimos12' ? 'Últimos 12' : year === 'todos' ? 'Todos' : year}</option>)}</select></label>
             <label className="text-sm font-semibold text-slate-700">Mês<select className="mt-1 block rounded-md border border-slate-300 bg-white px-3 py-2 text-sm" value={selectedMonth} onChange={(event) => setSelectedMonth(event.target.value)}>{monthOptions.map((month) => <option key={month} value={month}>{month === 'todos' ? 'Todos' : month}</option>)}</select></label>
             <div className="flex flex-wrap gap-2 text-xs">
               <Pill tone="green">verde: em dia</Pill>
@@ -334,9 +335,9 @@ export default function Home() {
             </div>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[960px] border-collapse text-xs">
-              <thead><tr className="border-b text-left"><th className="sticky left-0 z-10 bg-white p-2">Prefeitura</th><th className="sticky left-[128px] z-10 bg-white p-2">Resumo</th>{monthlyCityStatus[0]?.months.map((item) => <th key={item.month} className="p-2 text-center">{item.month}</th>)}</tr></thead>
-              <tbody>{monthlyCityStatus.map(({ city, months, cityRateioStatus, avgAssistentialDelay }) => <tr key={city.id} className="border-b"><td className="sticky left-0 z-10 bg-white p-2 font-semibold">{city.name}</td><td className="sticky left-[128px] z-10 min-w-44 bg-white p-2">
+            <table className="w-full min-w-[1280px] border-collapse text-xs">
+              <thead><tr className="border-b text-left"><th className="sticky left-0 z-10 min-w-40 bg-white p-2">Prefeitura</th><th className="sticky left-[160px] z-10 min-w-56 bg-white p-2">Resumo</th>{monthlyCityStatus[0]?.months.map((item) => <th key={item.month} className="min-w-20 whitespace-nowrap p-2 text-center">{item.month}</th>)}</tr></thead>
+              <tbody>{monthlyCityStatus.map(({ city, months, cityRateioStatus, avgAssistentialDelay }) => <tr key={city.id} className="border-b"><td className="sticky left-0 z-10 min-w-40 whitespace-nowrap bg-white p-2 font-semibold">{city.name}</td><td className="sticky left-[160px] z-10 min-w-56 bg-white p-2">
                 <div className="flex flex-col gap-1">
                   <Pill tone={cityRateioStatus === 'em dia' ? 'green' : cityRateioStatus === 'atrasado' ? 'red' : cityRateioStatus === 'no prazo' ? 'yellow' : 'gray'}>Rateio: {cityRateioStatus}</Pill>
                   {avgAssistentialDelay > 0 ? <span className="text-xs font-semibold text-red-800">Média assistencial: {avgAssistentialDelay.toFixed(1)} dias</span> : <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-800"><CheckCircle2 size={14}/>Bom pagador</span>}
