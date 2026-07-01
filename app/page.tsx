@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
-import { AlertTriangle, Banknote, CalendarClock, CheckCircle2, CheckSquare, ExternalLink, FileText, Gauge, LayoutDashboard, Plus, Scale, Upload } from 'lucide-react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
+import { AlertTriangle, Banknote, CalendarClock, CheckCircle2, CheckSquare, ChevronDown, ChevronRight, ExternalLink, FileText, Gauge, LayoutDashboard, Plus, Scale, Upload } from 'lucide-react'
 import { average, invoiceDelay, invoiceTone, penaltyEstimate, riskLevel, stricterMunicipalDeadline, transferDelay, transferStatus } from '@/lib/calculations'
 import { contracts as seedContracts, invoices as seedInvoices, municipalities as seedMunicipalities, publicSources, transfers as seedTransfers } from '@/lib/sample-data'
 import { historicalGeneratedAt, historicalSummaries } from '@/lib/historical-data'
@@ -107,6 +107,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'nfse' | 'prefeituras'>('nfse')
   const [selectedYear, setSelectedYear] = useState('todos')
   const [selectedMonth, setSelectedMonth] = useState('todos')
+  const [expandedTransferGroups, setExpandedTransferGroups] = useState<string[]>([])
 
   useEffect(() => {
     const stored = localStorage.getItem('cislav-monitor-state')
@@ -140,6 +141,36 @@ export default function Home() {
       const dates = [...new Set(cityTransfers.map((transfer) => transfer.paidAt).filter(Boolean))].sort()
       return { city, total, count: cityTransfers.length, dates }
     }).filter((item) => item.count > 0).sort((a, b) => b.total - a.total)
+  }, [transfers])
+  const transferGroups = useMemo(() => {
+    const groups = new Map<string, { key: string; municipalityId: string; cityName: string; competence: string; rows: MunicipalityTransfer[]; expected: number; paid: number; firstPaidAt?: string; lastPaidAt?: string; deadline: string; divergenceNote?: string }>()
+    for (const transfer of transfers) {
+      const city = seedMunicipalities.find((item) => item.id === transfer.municipalityId)
+      const key = `${transfer.municipalityId}-${transfer.competence}`
+      const group = groups.get(key) ?? {
+        key,
+        municipalityId: transfer.municipalityId,
+        cityName: city?.name ?? transfer.municipalityId,
+        competence: transfer.competence,
+        rows: [],
+        expected: 0,
+        paid: 0,
+        deadline: transfer.transferDeadline,
+        divergenceNote: transfer.divergenceNote,
+      }
+      group.rows.push(transfer)
+      group.expected += transfer.expectedAmount ?? 0
+      group.paid += transfer.paidAmount ?? 0
+      group.divergenceNote ??= transfer.divergenceNote
+      group.deadline = group.deadline < transfer.transferDeadline ? group.deadline : transfer.transferDeadline
+      const paidAt = transfer.paidAt
+      if (paidAt) {
+        group.firstPaidAt = !group.firstPaidAt || paidAt < group.firstPaidAt ? paidAt : group.firstPaidAt
+        group.lastPaidAt = !group.lastPaidAt || paidAt > group.lastPaidAt ? paidAt : group.lastPaidAt
+      }
+      groups.set(key, group)
+    }
+    return Array.from(groups.values()).sort((a, b) => (a.firstPaidAt ?? a.competence).localeCompare(b.firstPaidAt ?? b.competence) || a.cityName.localeCompare(b.cityName, 'pt-BR'))
   }, [transfers])
   const monthlyCityStatus = useMemo(() => {
     const visibleMonths = historicalMonths.filter((month) => (selectedYear === 'todos' || month.startsWith(selectedYear)) && (selectedMonth === 'todos' || month.endsWith(`-${selectedMonth}`)))
@@ -180,6 +211,7 @@ export default function Home() {
     updateSelected('municipalityIds', ids.length ? ids : [municipalityId])
   }
   function selectAllMunicipalities() { if (selected) updateSelected('municipalityIds', seedMunicipalities.map((city) => city.id)) }
+  function toggleTransferGroup(key: string) { setExpandedTransferGroups((items) => items.includes(key) ? items.filter((item) => item !== key) : [...items, key]) }
   function addInvoice() { const id = `nf-${Date.now()}`; const invoice: Invoice = { id, number: `NF-${invoices.length + 1}`, professionalName: 'Novo profissional', issueDate: '2026-06-01', acceptedDate: '2026-06-01', contractualBusinessDays: 21, amount: 0, municipalityIds: ['lavras'], paymentStatus: 'pending', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }; setInvoices([invoice, ...invoices]); setSelectedId(id) }
   function importCsv() {
     const rows = csv.trim().split(/\n/).slice(1).map((line) => line.split(',')).filter((cols) => cols.length >= 6)
@@ -278,7 +310,7 @@ export default function Home() {
             </div>)}
           </div>
           <div className="mb-3 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-950">Carrancas: a receita do CISLAV registra R$ 225.225,56 em maio, com R$ 4.151,48 em rateio no dia 15/05 e R$ 221.074,08 em programa no dia 29/05. O print do portal municipal mostra R$ 224.591,63; a API municipal por nome completo também retorna uma linha adicional de R$ 633,93 que pode não aparecer nesse filtro visual.</div>
-          <div className="overflow-x-auto"><table className="w-full min-w-[1120px] border-collapse text-sm"><thead><tr className="border-b text-left"><th className="p-2">Município</th><th>Competência</th><th>Natureza/histórico</th><th>Previsto</th><th>Pago</th><th>Limite cadastrado</th><th>Limite crítico</th><th>Repasse</th><th>Status</th><th>Atraso</th><th>Fonte</th></tr></thead><tbody>{transfers.map((transfer, index) => { const city = seedMunicipalities.find((m) => m.id === transfer.municipalityId); const status = transferStatus(transfer, today); const strictDeadline = selected ? stricterMunicipalDeadline(transfer, selected.acceptedDate) : undefined; const firstDivergenceIndex = transfer.divergenceNote ? transfers.findIndex((item) => item.municipalityId === transfer.municipalityId && item.competence === transfer.competence && item.divergenceNote === transfer.divergenceNote) : -1; const showDivergence = firstDivergenceIndex === index; return <tr key={transfer.id} className={`border-b align-top ${showDivergence ? 'bg-red-50/60' : ''}`}><td className="p-2">{city?.name ?? transfer.municipalityId}{showDivergence && <span className="mt-1 block"><Pill tone="red">divergência</Pill></span>}</td><td>{transfer.competence}</td><td className="max-w-[260px] pr-3 text-xs text-slate-700">{transfer.sourceDocument}<span className="mt-1 block text-slate-500">{transfer.notes}</span>{showDivergence && <span className="mt-1 block font-semibold text-red-800">{transfer.divergenceNote}</span>}</td><td>{money.format(transfer.expectedAmount ?? 0)}</td><td>{transfer.paidAmount ? money.format(transfer.paidAmount) : '-'}</td><td>{formatDate(transfer.transferDeadline)}</td><td>{formatDate(strictDeadline)}</td><td>{formatDate(transfer.paidAt)}</td><td><Pill tone={status}>{status === 'paid' ? 'pago' : status === 'within_deadline' ? 'no prazo' : 'atrasado'}</Pill></td><td>{transferDelay(transfer, today)} dias</td><td>{transfer.sourceUrl ? <a className="text-leaf underline" href={transfer.sourceUrl} target="_blank">abrir</a> : '-'}</td></tr> })}</tbody></table></div>
+          <div className="overflow-x-auto"><table className="w-full min-w-[1120px] border-collapse text-sm"><thead><tr className="border-b text-left"><th className="p-2">Município</th><th>Competência</th><th>Resumo</th><th>Previsto</th><th>Pago</th><th>Limite crítico</th><th>Repasse</th><th>Status</th><th>Atraso</th><th>Fonte</th></tr></thead><tbody>{transferGroups.map((group) => { const expanded = expandedTransferGroups.includes(group.key); const groupStatus = group.rows.some((transfer) => transferStatus(transfer, today) === 'overdue') ? 'overdue' : group.rows.every((transfer) => transferStatus(transfer, today) === 'paid') ? 'paid' : 'within_deadline'; const groupDelay = Math.max(...group.rows.map((transfer) => transferDelay(transfer, today))); const strictDeadline = selected ? group.rows.map((transfer) => stricterMunicipalDeadline(transfer, selected.acceptedDate)).sort((a, b) => a.getTime() - b.getTime())[0] : undefined; return <Fragment key={group.key}><tr className={`border-b align-top ${group.divergenceNote ? 'bg-red-50/60' : ''}`}><td className="p-2"><button onClick={() => toggleTransferGroup(group.key)} className="focus-ring inline-flex items-center gap-1 rounded px-1 py-1 text-left font-semibold text-slate-800">{expanded ? <ChevronDown size={16}/> : <ChevronRight size={16}/>} {group.cityName}</button>{group.divergenceNote && <span className="mt-1 block"><Pill tone="red">divergência</Pill></span>}</td><td>{group.competence}</td><td className="max-w-[320px] pr-3 text-xs text-slate-700">{group.rows.length} repasse(s) no mês<span className="mt-1 block text-slate-500">{group.rows.map((transfer) => transferKind(transfer)).filter((kind, index, list) => list.indexOf(kind) === index).join(' + ')}</span>{group.divergenceNote && <span className="mt-1 block font-semibold text-red-800">{group.divergenceNote}</span>}</td><td>{money.format(group.expected)}</td><td>{group.paid ? money.format(group.paid) : '-'}</td><td>{formatDate(strictDeadline)}</td><td>{formatDate(group.lastPaidAt)}</td><td><Pill tone={groupStatus}>{groupStatus === 'paid' ? 'pago' : groupStatus === 'within_deadline' ? 'no prazo' : 'atrasado'}</Pill></td><td>{groupDelay} dias</td><td>{group.rows[0]?.sourceUrl ? <a className="text-leaf underline" href={group.rows[0].sourceUrl} target="_blank">abrir</a> : '-'}</td></tr>{expanded && group.rows.map((transfer) => { const status = transferStatus(transfer, today); const detailDeadline = selected ? stricterMunicipalDeadline(transfer, selected.acceptedDate) : undefined; return <tr key={transfer.id} className="border-b bg-slate-50 align-top text-xs"><td className="p-2 pl-8 text-slate-600">{group.cityName}</td><td>{transfer.competence}</td><td className="max-w-[320px] pr-3 text-slate-700">{transfer.sourceDocument}<span className="mt-1 block text-slate-500">{transfer.notes}</span></td><td>{money.format(transfer.expectedAmount ?? 0)}</td><td>{transfer.paidAmount ? money.format(transfer.paidAmount) : '-'}</td><td>{formatDate(detailDeadline)}</td><td>{formatDate(transfer.paidAt)}</td><td><Pill tone={status}>{status === 'paid' ? 'pago' : status === 'within_deadline' ? 'no prazo' : 'atrasado'}</Pill></td><td>{transferDelay(transfer, today)} dias</td><td>{transfer.sourceUrl ? <a className="text-leaf underline" href={transfer.sourceUrl} target="_blank">abrir</a> : '-'}</td></tr> })}</Fragment> })}</tbody></table></div>
         </Card>
         </>}
 
