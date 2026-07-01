@@ -1,0 +1,2065 @@
+{
+  "generatedAt": "2026-06-30T12:30:52.815Z",
+  "report": [
+    {
+      "municipio": "CARRANCAS",
+      "host": "https://ptn.carrancas.mg.gov.br",
+      "attempts": [
+        {
+          "creditor": "CISLAV",
+          "url": "https://ptn.carrancas.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CISLAV",
+          "status": 200,
+          "count": 0
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE",
+          "url": "https://ptn.carrancas.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE",
+          "status": 200,
+          "count": 4
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIP",
+          "url": "https://ptn.carrancas.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE%20DOS%20MUNICIP",
+          "status": 200,
+          "count": 4
+        },
+        {
+          "creditor": "CONSÓRCIO INTERMUNICIPAL DE SAÚDE",
+          "url": "https://ptn.carrancas.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONS%C3%93RCIO%20INTERMUNICIPAL%20DE%20SA%C3%9ADE",
+          "status": 200,
+          "count": 4
+        }
+      ],
+      "error": "",
+      "cislav": {
+        "total": 225225.56,
+        "quantidade": 2,
+        "datas": [
+          "2026-05-15",
+          "2026-05-29"
+        ],
+        "rows": [
+          {
+            "data": "2026-05-15",
+            "municipio": "CARRANCAS",
+            "valor": 4151.48,
+            "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM CARRANCAS",
+            "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+            "idReceita": "17395001",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          },
+          {
+            "data": "2026-05-29",
+            "municipio": "CARRANCAS",
+            "valor": 221074.08,
+            "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM CARRANCAS",
+            "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+            "idReceita": "16319901",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          }
+        ]
+      },
+      "prefeitura": {
+        "total": 225225.56,
+        "quantidade": 4,
+        "datas": [
+          "2026-05-15",
+          "2026-05-29"
+        ],
+        "notasFiscais": [
+          {
+            "municipio": "CARRANCAS",
+            "empenho": "00136-004",
+            "valor": 221074.08,
+            "pagamento": "2026-05-29",
+            "notaFiscal": "5792",
+            "serie": "NFSE",
+            "emissao": "2026-05-18",
+            "vencimento": "2026-05-18"
+          }
+        ],
+        "rows": [
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00019-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-06",
+              "dataDeLiquidacao": "2026-05-06",
+              "dataDePagamento": "2026-05-15",
+              "referencia": "00019000",
+              "unidade": "02.016.000 - FUNDO MUNICIPAL DE SAUDE- FMS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1003 - AÇOES EM SERV.SAUDE ALTA COMPLEXIDADE",
+              "projetoAtividade": "2226 - MANUT.CONSORC.INTERM.SAUDE-CISLAV E OUTROS",
+              "categoriaEconomica": "3.1.71.70.00 - RATEIO PELA PARTICIPAÇAO EM CONSORCIO PUBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 2283.31,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIP - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE / AO REPASSE FINANCEIRO AO CISLAV- CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIPIOS DA MICRORREGIAO DE LAVRAS PARA CUSTEIO DE DESPESAS, CONFORME CONTRATO DE RATEIO 2026, MES MAIO DE 2026."
+            },
+            "notasFiscais": []
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00020-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-06",
+              "dataDeLiquidacao": "2026-05-06",
+              "dataDePagamento": "2026-05-15",
+              "referencia": "00020000",
+              "unidade": "02.016.000 - FUNDO MUNICIPAL DE SAUDE- FMS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1003 - AÇOES EM SERV.SAUDE ALTA COMPLEXIDADE",
+              "projetoAtividade": "2226 - MANUT.CONSORC.INTERM.SAUDE-CISLAV E OUTROS",
+              "categoriaEconomica": "3.3.71.70.00 - RATEIO PELA PARTICIPAÇAO EM CONSORCIO PUBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 1234.24,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIP - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE / AO REPASSE FINANCEIRO AO CISLAV- CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIPIOS DA MICRORREGIAO DE LAVRAS PARA CUSTEIO DE DESPESAS, CONFORME CONTRATO DE RATEIO 2026, MES MAIO DE 2026."
+            },
+            "notasFiscais": []
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00021-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-06",
+              "dataDeLiquidacao": "2026-05-06",
+              "dataDePagamento": "2026-05-15",
+              "referencia": "00021000",
+              "unidade": "02.016.000 - FUNDO MUNICIPAL DE SAUDE- FMS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1003 - AÇOES EM SERV.SAUDE ALTA COMPLEXIDADE",
+              "projetoAtividade": "1229 - RATEIO PELA PARTIC. EM CONS.PUBLICOS-INVESTIM",
+              "categoriaEconomica": "4.4.71.70.00 - RATEIO PELA PARTICIP. EM CONSORCIOS PUBLICOS",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 633.93,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIP - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE / AO REPASSE FINANCEIRO AO CISLAV- CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIPIOS DA MICRORREGIAO DE LAVRAS PARA CUSTEIO DE DESPESAS, CONFORME CONTRATO DE RATEIO 2026, MES MAIO DE 2026."
+            },
+            "notasFiscais": []
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "00032026 / 0",
+              "modalidade": "Dispensa - 00022026",
+              "requisicaoDeCompra": "26000008004",
+              "empenho": "00136-004",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-18",
+              "dataDeLiquidacao": "2026-05-18",
+              "dataDePagamento": "2026-05-29",
+              "referencia": "00136000",
+              "unidade": "02.016.000 - FUNDO MUNICIPAL DE SAUDE- FMS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1003 - AÇOES EM SERV.SAUDE ALTA COMPLEXIDADE",
+              "projetoAtividade": "2226 - MANUT.CONSORC.INTERM.SAUDE-CISLAV E OUTROS",
+              "categoriaEconomica": "3.3.90.39.00 - OUTROS SERVIÇOS DE TERCEIROS - PESSOA JURÍDIC",
+              "tipoDeDespesa": "36 - SERVIÇO MÉDICO-HOSPITALAR, ODONTOLÓGICO E LAB",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 221074.08,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIP - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE / CELEBRAÇÃO DE CONTRATO DE PROGRAMA ENTRE O MUNICÍPIO DE CARRANCAS MG COM O CONSÓRCIO INTERMUNICIPAL DE SAÚDE DA MICRO REGIÃO DE LAVRAS - CISLAV, PARA INTEGRAÇÃO DOS SERVIÇOS ASSISTENCIAIS EM REDE HIERÁRQUICA E DESCENTRALIZADA DE ETENDIMENTO, NO QUE TANGE À INTERMEDIAÇÃO DA PRESTAÇÃO DE SERVIÇOS DE EXAMES, CONSULTAS E CIRURGIAS/PROCEDIMENTOS ESPECIALIZADOS COMPROFISSIONAIS DA ÁREA DA SAÚDE, MES ABRIL DE 2026."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5792",
+                "serie": "NFSE",
+                "emissao": "2026-05-18",
+                "vencimento": "2026-05-18",
+                "autorizacaoParaImpressao": "",
+                "tipo": 3,
+                "chaveDeAcesso": ""
+              }
+            ]
+          }
+        ]
+      },
+      "diferenca": 0,
+      "status": "conciliado_por_total"
+    },
+    {
+      "municipio": "IBITURUNA",
+      "host": "https://pt.ibituruna.mg.gov.br",
+      "attempts": [
+        {
+          "creditor": "CISLAV",
+          "url": "https://pt.ibituruna.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CISLAV",
+          "status": 200,
+          "count": 4
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE",
+          "url": "https://pt.ibituruna.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE",
+          "status": 200,
+          "count": 0
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIP",
+          "url": "https://pt.ibituruna.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE%20DOS%20MUNICIP",
+          "status": 200,
+          "count": 0
+        },
+        {
+          "creditor": "CONSÓRCIO INTERMUNICIPAL DE SAÚDE",
+          "url": "https://pt.ibituruna.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONS%C3%93RCIO%20INTERMUNICIPAL%20DE%20SA%C3%9ADE",
+          "status": 200,
+          "count": 0
+        }
+      ],
+      "error": "",
+      "cislav": {
+        "total": 79755.62,
+        "quantidade": 2,
+        "datas": [
+          "2026-05-08"
+        ],
+        "rows": [
+          {
+            "data": "2026-05-08",
+            "municipio": "IBITURUNA",
+            "valor": 75604.14,
+            "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM IBITURUNA",
+            "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+            "idReceita": "16319901",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          },
+          {
+            "data": "2026-05-08",
+            "municipio": "IBITURUNA",
+            "valor": 4151.48,
+            "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM IBITURUNA",
+            "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+            "idReceita": "17395001",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          }
+        ]
+      },
+      "prefeitura": {
+        "total": 79755.62,
+        "quantidade": 4,
+        "datas": [
+          "2026-05-08"
+        ],
+        "notasFiscais": [
+          {
+            "municipio": "IBITURUNA",
+            "empenho": "00020-004",
+            "valor": 2283.31,
+            "pagamento": "2026-05-08",
+            "notaFiscal": "5719",
+            "serie": "ELET",
+            "emissao": "2026-04-07",
+            "vencimento": "2026-04-07"
+          },
+          {
+            "municipio": "IBITURUNA",
+            "empenho": "00021-004",
+            "valor": 1234.24,
+            "pagamento": "2026-05-08",
+            "notaFiscal": "5719",
+            "serie": "ELET",
+            "emissao": "2026-04-07",
+            "vencimento": "2026-04-07"
+          },
+          {
+            "municipio": "IBITURUNA",
+            "empenho": "00022-004",
+            "valor": 633.93,
+            "pagamento": "2026-05-08",
+            "notaFiscal": "5719",
+            "serie": "ELET",
+            "emissao": "2026-04-07",
+            "vencimento": "2026-04-07"
+          },
+          {
+            "municipio": "IBITURUNA",
+            "empenho": "00252-003",
+            "valor": 75604.14,
+            "pagamento": "2026-05-08",
+            "notaFiscal": "5734",
+            "serie": "ELET",
+            "emissao": "2026-04-23",
+            "vencimento": "2026-04-23"
+          }
+        ],
+        "rows": [
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00020-004",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-07",
+              "dataDeLiquidacao": "2026-04-07",
+              "dataDePagamento": "2026-05-08",
+              "referencia": "00020000",
+              "unidade": "02.006.001 - FUNDO MUNICIPAL DE SAUDE",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSIST. HOSPITALAR E AMBULATORIAL",
+              "programa": "4005 - MANUT SERV. ASSIST HOSPITALAR E AMBULATORIAL",
+              "projetoAtividade": "2193 - MANUT. CONTRATO RATEIO CONSÓRCIO PÚBLICO",
+              "categoriaEconomica": "3.1.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 2283.31,
+              "descontos": [],
+              "credor": "CONS. INTERMUNICIPAL DE SAÚDE - CISLAV - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "DESPESA REFERENTE À /  CONTRATAÇÃO DE CONSÓRCIO PÚBLICO DE SAÚDE VISANDO A INTEGRAÇÃO DOS SERVIÇOS ASSISTENCIAIS EM REDE HIERÁRQUICA E DESCENTRALIZADA DE ATENDIMENTO, NO QUE TANGE À INTERMEDIAÇÃO DA PRESTAÇÃO DE SERVIÇOS DE EXAMES, CONSULTAS E CIRURGIAS/PROCEDIMENTOS ESPECIALIZADOS COM PROFISSIONAIS DA ÁREA DE SAÚDE. CONTRATO DE RATEIO CONFORME LEI 1391 DE 29 DE JANEIRO DE 2025"
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5719",
+                "serie": "ELET",
+                "emissao": "2026-04-07",
+                "vencimento": "2026-04-07",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000571926040000001060"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00021-004",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-07",
+              "dataDeLiquidacao": "2026-04-07",
+              "dataDePagamento": "2026-05-08",
+              "referencia": "00021000",
+              "unidade": "02.006.001 - FUNDO MUNICIPAL DE SAUDE",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSIST. HOSPITALAR E AMBULATORIAL",
+              "programa": "4005 - MANUT SERV. ASSIST HOSPITALAR E AMBULATORIAL",
+              "projetoAtividade": "2193 - MANUT. CONTRATO RATEIO CONSÓRCIO PÚBLICO",
+              "categoriaEconomica": "3.3.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 1234.24,
+              "descontos": [],
+              "credor": "CONS. INTERMUNICIPAL DE SAÚDE - CISLAV - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "DESPESA REFERENTE À /  CONTRATAÇÃO DE CONSÓRCIO PÚBLICO DE SAÚDE VISANDO A INTEGRAÇÃO DOS SERVIÇOS ASSISTENCIAIS EM REDE HIERÁRQUICA E DESCENTRALIZADA DE ATENDIMENTO, NO QUE TANGE À INTERMEDIAÇÃO DA PRESTAÇÃO DE SERVIÇOS DE EXAMES, CONSULTAS E CIRURGIAS/PROCEDIMENTOS ESPECIALIZADOS COM PROFISSIONAIS DA ÁREA DE SAÚDE. CONTRATO DE RATEIO CONFORME LEI 1391 DE 29 DE JANEIRO DE 2025"
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5719",
+                "serie": "ELET",
+                "emissao": "2026-04-07",
+                "vencimento": "2026-04-07",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000571926040000001060"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00022-004",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-07",
+              "dataDeLiquidacao": "2026-04-07",
+              "dataDePagamento": "2026-05-08",
+              "referencia": "00022000",
+              "unidade": "02.006.001 - FUNDO MUNICIPAL DE SAUDE",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSIST. HOSPITALAR E AMBULATORIAL",
+              "programa": "4005 - MANUT SERV. ASSIST HOSPITALAR E AMBULATORIAL",
+              "projetoAtividade": "1199 - MANUT. CONTRATO RATEIO CONSÓRCIO PÚBLICO",
+              "categoriaEconomica": "4.4.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 633.93,
+              "descontos": [],
+              "credor": "CONS. INTERMUNICIPAL DE SAÚDE - CISLAV - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "DESPESA REFERENTE À /  CONTRATAÇÃO DE CONSÓRCIO PÚBLICO DE SAÚDE VISANDO A INTEGRAÇÃO DOS SERVIÇOS ASSISTENCIAIS EM REDE HIERÁRQUICA E DESCENTRALIZADA DE ATENDIMENTO, NO QUE TANGE À INTERMEDIAÇÃO DA PRESTAÇÃO DE SERVIÇOS DE EXAMES, CONSULTAS E CIRURGIAS/PROCEDIMENTOS ESPECIALIZADOS COM PROFISSIONAIS DA ÁREA DE SAÚDE. CONTRATO DE RATEIO CONFORME LEI 1391 DE 29 DE JANEIRO DE 2025"
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5719",
+                "serie": "ELET",
+                "emissao": "2026-04-07",
+                "vencimento": "2026-04-07",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000571926040000001060"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "00001726 / 0",
+              "modalidade": "Dispensa - 00082026",
+              "requisicaoDeCompra": "26000324003",
+              "empenho": "00252-003",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-23",
+              "dataDeLiquidacao": "2026-04-23",
+              "dataDePagamento": "2026-05-08",
+              "referencia": "00252000",
+              "unidade": "02.006.001 - FUNDO MUNICIPAL DE SAUDE",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSIST. HOSPITALAR E AMBULATORIAL",
+              "programa": "1054 - EMENDA PARLAMENTAR DOS VEREADORES",
+              "projetoAtividade": "2194 - CONSULTAS EXAMES CIRURGIAS/PROC ESPECIALIZADO",
+              "categoriaEconomica": "3.3.93.39.00 - OUTROS SERVIÇOS DE TERCEIROS - PESSOA JURÍDIC",
+              "tipoDeDespesa": "99 - OUTROS SERVIÇOS DE TERCEIROS  PESSOA JURÍDIC",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 75604.14,
+              "descontos": [],
+              "credor": "CONS. INTERMUNICIPAL DE SAÚDE - CISLAV - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "DESPESA REFERENTE À / CONTRATO DE PROGRAMA PARA A INTEGRAÇÃO DOS SERVIÇOS ASSISTENCIAIS EM REDE HIERÁRQUICA E DESCENTRALIZADA DE ATENDIMENTO, NO QUE TANGE À INTERMEDIAÇÃO DA PRESTAÇÃO DE SERVIÇOS DE EXAMES, CONSULTAS E CIRURGIAS/PROCEDIMENTOS ESPECIALIZADOS COM PROFISSIONAIS DA ÁREA DE SAÚDE."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5734",
+                "serie": "ELET",
+                "emissao": "2026-04-23",
+                "vencimento": "2026-04-23",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000573426040000001210"
+              }
+            ]
+          }
+        ]
+      },
+      "diferenca": 0,
+      "status": "conciliado_por_total"
+    },
+    {
+      "municipio": "IJACÍ",
+      "host": "https://transparencia.ijaci.mg.gov.br",
+      "attempts": [
+        {
+          "creditor": "CISLAV",
+          "url": "https://transparencia.ijaci.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CISLAV",
+          "status": 200,
+          "count": 1
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE",
+          "url": "https://transparencia.ijaci.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE",
+          "status": 200,
+          "count": 3
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIP",
+          "url": "https://transparencia.ijaci.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE%20DOS%20MUNICIP",
+          "status": 200,
+          "count": 0
+        },
+        {
+          "creditor": "CONSÓRCIO INTERMUNICIPAL DE SAÚDE",
+          "url": "https://transparencia.ijaci.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONS%C3%93RCIO%20INTERMUNICIPAL%20DE%20SA%C3%9ADE",
+          "status": 200,
+          "count": 3
+        }
+      ],
+      "error": "",
+      "cislav": {
+        "total": 151896.4,
+        "quantidade": 1,
+        "datas": [
+          "2026-05-14"
+        ],
+        "rows": [
+          {
+            "data": "2026-05-14",
+            "municipio": "IJACÍ",
+            "valor": 151896.4,
+            "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM IJACÍ",
+            "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+            "idReceita": "16319901",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          }
+        ]
+      },
+      "prefeitura": {
+        "total": 153997.3,
+        "quantidade": 4,
+        "datas": [
+          "2026-05-11",
+          "2026-05-14"
+        ],
+        "notasFiscais": [
+          {
+            "municipio": "IJACÍ",
+            "empenho": "00165-002",
+            "valor": 151896.4,
+            "pagamento": "2026-05-14",
+            "notaFiscal": "5704",
+            "serie": "EL",
+            "emissao": "2026-03-18",
+            "vencimento": "2026-04-18"
+          }
+        ],
+        "rows": [
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00165-002",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-03-18",
+              "dataDeLiquidacao": "2026-04-10",
+              "dataDePagamento": "2026-05-14",
+              "referencia": "00165000",
+              "unidade": "02.008.002 - FDO MUNICIPAL DE SAÚDE / ATENÇÃO BÁSICA",
+              "funcao": "10 - SAÚDE",
+              "subfuncao": "301 - ATENÇÃO BÁSICA",
+              "programa": "0210 - ATENDIMENTO AMBULAT.,EMERG. E HOSPITALAR",
+              "projetoAtividade": "2063 - MAN. CONT. CONSORCIO INTERMUNICIPAL DE SAÚDE",
+              "categoriaEconomica": "3.3.90.39.00 - OUTROS SERVIÇOS DE TERCEIROS - PESSOA JURÍDIC",
+              "tipoDeDespesa": "36 - SERVIÇO MÉDICO-HOSPITALAR, ODONTOLÓGICO E LAB",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 151896.4,
+              "descontos": [],
+              "credor": "CISLAV-CONSORCIO INT.SAUDE M.REG-LAVRAS - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "DESPESA REFERENTE À / DESPESA REFERENTE AO CONTRATO DE PROGRAMA 015/2026 QUE TEM POR OBJETO A INTERMEDIAÇÃO DA PRESTAÇÃO DE SERVIÇOS DE EXAMES, CONSULTAS E CIRURGIAS/PROCEDIMENTOS ESPECIALIZADOS COM PROFISSIONAIS DA AREA DA SAÚDE. REFERENTE A FEVEREIRO DE 2026."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5704",
+                "serie": "EL",
+                "emissao": "2026-03-18",
+                "vencimento": "2026-04-18",
+                "autorizacaoParaImpressao": "",
+                "tipo": 3,
+                "chaveDeAcesso": ""
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00978-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-11",
+              "dataDeLiquidacao": "2026-05-11",
+              "dataDePagamento": "2026-05-11",
+              "referencia": "00978000",
+              "unidade": "02.008.002 - FDO MUNICIPAL DE SAÚDE / ATENÇÃO BÁSICA",
+              "funcao": "10 - SAÚDE",
+              "subfuncao": "301 - ATENÇÃO BÁSICA",
+              "programa": "0210 - ATENDIMENTO AMBULAT.,EMERG. E HOSPITALAR",
+              "projetoAtividade": "2065 - CONTRIBUIÇÃO CONS.SAÚDE URGÊNCIA SAMU/CISSUL",
+              "categoriaEconomica": "3.1.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 693.3,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE DA MACRO RE - CPF/CNPJ: 13.985.869/0001-84",
+              "cargo": "",
+              "historico": "DESPESA REFERENTE À / CONTRATO DE RATEIO N. 70/2026 TENDO COMO OBJETO RATEIO DE RECURSOS FINANCEIROS PARA REALIZAÇÃO DE DESPESAS OPERACIONAIS E ADMINISTRATIVAS DO CISSUL, NO DECORRER DO EXERCICIO DE 2026. C/C Nº 73046-7."
+            },
+            "notasFiscais": []
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00979-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-11",
+              "dataDeLiquidacao": "2026-05-11",
+              "dataDePagamento": "2026-05-11",
+              "referencia": "00979000",
+              "unidade": "02.008.002 - FDO MUNICIPAL DE SAÚDE / ATENÇÃO BÁSICA",
+              "funcao": "10 - SAÚDE",
+              "subfuncao": "301 - ATENÇÃO BÁSICA",
+              "programa": "0210 - ATENDIMENTO AMBULAT.,EMERG. E HOSPITALAR",
+              "projetoAtividade": "2065 - CONTRIBUIÇÃO CONS.SAÚDE URGÊNCIA SAMU/CISSUL",
+              "categoriaEconomica": "3.3.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 1260.54,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE DA MACRO RE - CPF/CNPJ: 13.985.869/0001-84",
+              "cargo": "",
+              "historico": "DESPESA REFERENTE À / CONTRATO DE RATEIO N. 70/2026 TENDO COMO OBJETO RATEIO DE RECURSOS FINANCEIROS PARA REALIZAÇÃO DE DESPESAS OPERACIONAIS E ADMINISTRATIVAS DO CISSUL, NO DECORRER DO EXERCICIO DE 2026. C/C Nº 73046-7."
+            },
+            "notasFiscais": []
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00980-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-11",
+              "dataDeLiquidacao": "2026-05-11",
+              "dataDePagamento": "2026-05-11",
+              "referencia": "00980000",
+              "unidade": "02.008.002 - FDO MUNICIPAL DE SAÚDE / ATENÇÃO BÁSICA",
+              "funcao": "10 - SAÚDE",
+              "subfuncao": "301 - ATENÇÃO BÁSICA",
+              "programa": "0210 - ATENDIMENTO AMBULAT.,EMERG. E HOSPITALAR",
+              "projetoAtividade": "2065 - CONTRIBUIÇÃO CONS.SAÚDE URGÊNCIA SAMU/CISSUL",
+              "categoriaEconomica": "4.4.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 147.06,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE DA MACRO RE - CPF/CNPJ: 13.985.869/0001-84",
+              "cargo": "",
+              "historico": "DESPESA REFERENTE À / CONTRATO DE RATEIO N. 70/2026 TENDO COMO OBJETO RATEIO DE RECURSOS FINANCEIROS PARA REALIZAÇÃO DE DESPESAS OPERACIONAIS E ADMINISTRATIVAS DO CISSUL, NO DECORRER DO EXERCICIO DE 2026. C/C Nº 73046-7."
+            },
+            "notasFiscais": []
+          }
+        ]
+      },
+      "diferenca": 2100.9,
+      "status": "divergente_por_total"
+    },
+    {
+      "municipio": "INGAÍ",
+      "host": "https://pt.ingai.mg.gov.br",
+      "attempts": [
+        {
+          "creditor": "CISLAV",
+          "url": "https://pt.ingai.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CISLAV",
+          "status": 200,
+          "count": 7
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE",
+          "url": "https://pt.ingai.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE",
+          "status": 200,
+          "count": 0
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIP",
+          "url": "https://pt.ingai.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE%20DOS%20MUNICIP",
+          "status": 200,
+          "count": 0
+        },
+        {
+          "creditor": "CONSÓRCIO INTERMUNICIPAL DE SAÚDE",
+          "url": "https://pt.ingai.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONS%C3%93RCIO%20INTERMUNICIPAL%20DE%20SA%C3%9ADE",
+          "status": 200,
+          "count": 0
+        }
+      ],
+      "error": "",
+      "cislav": {
+        "total": 48674.96,
+        "quantidade": 3,
+        "datas": [
+          "2026-05-08",
+          "2026-05-19",
+          "2026-05-20"
+        ],
+        "rows": [
+          {
+            "data": "2026-05-08",
+            "municipio": "INGAÍ",
+            "valor": 4151.48,
+            "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM INGAÍ",
+            "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+            "idReceita": "17395001",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          },
+          {
+            "data": "2026-05-19",
+            "municipio": "INGAÍ",
+            "valor": 40372,
+            "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM INGAÍ",
+            "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+            "idReceita": "16319901",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          },
+          {
+            "data": "2026-05-20",
+            "municipio": "INGAÍ",
+            "valor": 4151.48,
+            "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM INGAÍ",
+            "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+            "idReceita": "17395001",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          }
+        ]
+      },
+      "prefeitura": {
+        "total": 48674.96,
+        "quantidade": 7,
+        "datas": [
+          "2026-05-08",
+          "2026-05-19",
+          "2026-05-20"
+        ],
+        "notasFiscais": [
+          {
+            "municipio": "INGAÍ",
+            "empenho": "00112-004",
+            "valor": 2283.31,
+            "pagamento": "2026-05-08",
+            "notaFiscal": "5718",
+            "serie": "NFS-E",
+            "emissao": "2026-04-07",
+            "vencimento": "2026-04-07"
+          },
+          {
+            "municipio": "INGAÍ",
+            "empenho": "00112-005",
+            "valor": 2283.31,
+            "pagamento": "2026-05-20",
+            "notaFiscal": "5750",
+            "serie": "NFS-E",
+            "emissao": "2026-05-06",
+            "vencimento": "2026-05-06"
+          },
+          {
+            "municipio": "INGAÍ",
+            "empenho": "00113-004",
+            "valor": 1234.24,
+            "pagamento": "2026-05-08",
+            "notaFiscal": "5718",
+            "serie": "NFS-E",
+            "emissao": "2026-04-07",
+            "vencimento": "2026-04-07"
+          },
+          {
+            "municipio": "INGAÍ",
+            "empenho": "00113-005",
+            "valor": 1234.24,
+            "pagamento": "2026-05-20",
+            "notaFiscal": "5750",
+            "serie": "NFS-E",
+            "emissao": "2026-05-06",
+            "vencimento": "2026-05-06"
+          },
+          {
+            "municipio": "INGAÍ",
+            "empenho": "00114-004",
+            "valor": 633.93,
+            "pagamento": "2026-05-08",
+            "notaFiscal": "5718",
+            "serie": "NFS-E",
+            "emissao": "2026-04-07",
+            "vencimento": "2026-04-07"
+          },
+          {
+            "municipio": "INGAÍ",
+            "empenho": "00114-005",
+            "valor": 633.93,
+            "pagamento": "2026-05-20",
+            "notaFiscal": "5750",
+            "serie": "NFS-E",
+            "emissao": "2026-05-06",
+            "vencimento": "2026-05-06"
+          },
+          {
+            "municipio": "INGAÍ",
+            "empenho": "00345-001",
+            "valor": 40372,
+            "pagamento": "2026-05-19",
+            "notaFiscal": "5782",
+            "serie": "NFS-E",
+            "emissao": "2026-05-08",
+            "vencimento": "2026-05-08"
+          }
+        ],
+        "rows": [
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00112-004",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-07",
+              "dataDeLiquidacao": "2026-04-07",
+              "dataDePagamento": "2026-05-08",
+              "referencia": "00112000",
+              "unidade": "02.021.071 - SECRETARIA MUNICIPAL DE SAÚDE - FMS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "2395 - MANUT ATIV. CONV PROGRAMA SAUDE RATEIO-CISLAV",
+              "categoriaEconomica": "3.1.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 2283.31,
+              "descontos": [],
+              "credor": "CISLAV - CONS.INT.SAUDE MUNIC.MIC.LAVRAS - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE RATEIO NUMERO 004/2026 QUE FORMALIZAM ENTRE SI O CONSÓRCIO - CISLAV CONSORCIO INTERMUNICIPAL DE SAÚDE DOS MUNICÍPIOS DA MICRORREGIÃO DE LAVRAS E O MUNICÍPIO DE INGAÍ, DESTINADO AO RATEIO DAS DESPESAS ADMINISTRATIVAS, DURANTE O EXERCÍCIO DE DE 2026. REPASSE REFERENTE AO MES DE ABRIL DE 2026."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5718",
+                "serie": "NFS-E",
+                "emissao": "2026-04-07",
+                "vencimento": "2026-04-07",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000571826040000001058"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00112-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-06",
+              "dataDeLiquidacao": "2026-05-06",
+              "dataDePagamento": "2026-05-20",
+              "referencia": "00112000",
+              "unidade": "02.021.071 - SECRETARIA MUNICIPAL DE SAÚDE - FMS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "2395 - MANUT ATIV. CONV PROGRAMA SAUDE RATEIO-CISLAV",
+              "categoriaEconomica": "3.1.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 2283.31,
+              "descontos": [],
+              "credor": "CISLAV - CONS.INT.SAUDE MUNIC.MIC.LAVRAS - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE RATEIO NUMERO 004/2026 QUE FORMALIZAM ENTRE SI O CONSÓRCIO - CISLAV CONSORCIO INTERMUNICIPAL DE SAÚDE DOS MUNICÍPIOS DA MICRORREGIÃO DE LAVRAS E O MUNICÍPIO DE INGAÍ, DESTINADO AO RATEIO DAS DESPESAS ADMINISTRATIVAS, DURANTE O EXERCÍCIO DE DE 2026. REPASSE REFERENTE AO MES DE MAIO DE 2026."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5750",
+                "serie": "NFS-E",
+                "emissao": "2026-05-06",
+                "vencimento": "2026-05-06",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000575026050000001375"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00113-004",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-07",
+              "dataDeLiquidacao": "2026-04-07",
+              "dataDePagamento": "2026-05-08",
+              "referencia": "00113000",
+              "unidade": "02.021.071 - SECRETARIA MUNICIPAL DE SAÚDE - FMS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "2395 - MANUT ATIV. CONV PROGRAMA SAUDE RATEIO-CISLAV",
+              "categoriaEconomica": "3.3.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 1234.24,
+              "descontos": [],
+              "credor": "CISLAV - CONS.INT.SAUDE MUNIC.MIC.LAVRAS - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE RATEIO NUMERO 004/2026 QUE FORMALIZAM ENTRE SI O CONSÓRCIO - CISLAV CONSORCIO INTERMUNICIPAL DE SAÚDE DOS MUNICÍPIOS DA MICRORREGIÃO DE LAVRAS E O MUNICÍPIO DE INGAÍ, DESTINADO AO RATEIO DAS DESPESAS ADMINISTRATIVAS, DURANTE O EXERCÍCIO DE DE 2026. REPASSE REFERENTE AO MES DE ABRIL DE 2026."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5718",
+                "serie": "NFS-E",
+                "emissao": "2026-04-07",
+                "vencimento": "2026-04-07",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000571826040000001058"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00113-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-06",
+              "dataDeLiquidacao": "2026-05-06",
+              "dataDePagamento": "2026-05-20",
+              "referencia": "00113000",
+              "unidade": "02.021.071 - SECRETARIA MUNICIPAL DE SAÚDE - FMS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "2395 - MANUT ATIV. CONV PROGRAMA SAUDE RATEIO-CISLAV",
+              "categoriaEconomica": "3.3.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 1234.24,
+              "descontos": [],
+              "credor": "CISLAV - CONS.INT.SAUDE MUNIC.MIC.LAVRAS - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE RATEIO NUMERO 004/2026 QUE FORMALIZAM ENTRE SI O CONSÓRCIO - CISLAV CONSORCIO INTERMUNICIPAL DE SAÚDE DOS MUNICÍPIOS DA MICRORREGIÃO DE LAVRAS E O MUNICÍPIO DE INGAÍ, DESTINADO AO RATEIO DAS DESPESAS ADMINISTRATIVAS, DURANTE O EXERCÍCIO DE DE 2026. REPASSE REFERENTE AO MES DE MAIO DE 2026."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5750",
+                "serie": "NFS-E",
+                "emissao": "2026-05-06",
+                "vencimento": "2026-05-06",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000575026050000001375"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00114-004",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-07",
+              "dataDeLiquidacao": "2026-04-07",
+              "dataDePagamento": "2026-05-08",
+              "referencia": "00114000",
+              "unidade": "02.021.071 - SECRETARIA MUNICIPAL DE SAÚDE - FMS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "1394 - INVESTIMENTO CONVENIO CONTRATO RATEIO-CISLAV",
+              "categoriaEconomica": "4.4.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 633.93,
+              "descontos": [],
+              "credor": "CISLAV - CONS.INT.SAUDE MUNIC.MIC.LAVRAS - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE RATEIO NUMERO 004/2026 QUE FORMALIZAM ENTRE SI O CONSÓRCIO - CISLAV CONSORCIO INTERMUNICIPAL DE SAÚDE DOS MUNICÍPIOS DA MICRORREGIÃO DE LAVRAS E O MUNICÍPIO DE INGAÍ, DESTINADO AO RATEIO DAS DESPESAS ADMINISTRATIVAS, DURANTE O EXERCÍCIO DE DE 2026. REPASSE REFERENTE AO MES DE ABRIL DE 2026."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5718",
+                "serie": "NFS-E",
+                "emissao": "2026-04-07",
+                "vencimento": "2026-04-07",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000571826040000001058"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00114-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-06",
+              "dataDeLiquidacao": "2026-05-06",
+              "dataDePagamento": "2026-05-20",
+              "referencia": "00114000",
+              "unidade": "02.021.071 - SECRETARIA MUNICIPAL DE SAÚDE - FMS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "1394 - INVESTIMENTO CONVENIO CONTRATO RATEIO-CISLAV",
+              "categoriaEconomica": "4.4.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 633.93,
+              "descontos": [],
+              "credor": "CISLAV - CONS.INT.SAUDE MUNIC.MIC.LAVRAS - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE RATEIO NUMERO 004/2026 QUE FORMALIZAM ENTRE SI O CONSÓRCIO - CISLAV CONSORCIO INTERMUNICIPAL DE SAÚDE DOS MUNICÍPIOS DA MICRORREGIÃO DE LAVRAS E O MUNICÍPIO DE INGAÍ, DESTINADO AO RATEIO DAS DESPESAS ADMINISTRATIVAS, DURANTE O EXERCÍCIO DE DE 2026. REPASSE REFERENTE AO MES DE MAIO DE 2026."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5750",
+                "serie": "NFS-E",
+                "emissao": "2026-05-06",
+                "vencimento": "2026-05-06",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000575026050000001375"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "00000226 / 0",
+              "modalidade": "Dispensa - 00012026",
+              "requisicaoDeCompra": "26000267001",
+              "empenho": "00345-001",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-08",
+              "dataDeLiquidacao": "2026-05-08",
+              "dataDePagamento": "2026-05-19",
+              "referencia": "00345000",
+              "unidade": "02.021.071 - SECRETARIA MUNICIPAL DE SAÚDE - FMS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "2396 - MANUT AÇÕES PROGR CONV CONSOR INTERMUN-CISLAV",
+              "categoriaEconomica": "3.3.90.39.00 - OUTROS SERVIÇOS DE TERCEIROS - PESSOA JURÍDIC",
+              "tipoDeDespesa": "36 - SERVIÇO MÉDICO-HOSPITALAR, ODONTOLÓGICO E LAB",
+              "fonteDeRecurso": "1.621.000 - TRANS.FUNDO A FUNDO SUS GOVERNO ESTADUAL",
+              "coTce": "0000  - SEM ACOMPANHAMENTO",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 40372,
+              "descontos": [],
+              "credor": "CISLAV - CONS.INT.SAUDE MUNIC.MIC.LAVRAS - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE PROGRAMA PARA INTEGRAÇÃO DOS SERVIÇOS ASSISTENCIAIS EM REDE HIERARQUICA E DESCENTRALIZADA DE ATENDIMENTO NO QUE TANGE A INTERMEDIAÇÃO DA PRESTAÇÃO DE SERVIÇO DE EXAMES, CONSULTA E CIRURGIAS /PROCEDIMENTOS ESPECIALIZADOS COM PROFISSIONAIS DA AREA DE SAUDE CELEBRADO ENTRE O MUNICIPIO DE INGAÍ E O CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIPIO DA MICRORREGIÃO DE LAVRAS CISLAV INCRITO NO CNPJ/MF SOB O N03.735.788/0001 72 CONFORME ART 75,XI, DA LEI FEDERAL N14133/21, SETOR DE MANUTENÇÃO AÇÕES PROGRAMA CONV. CONSORC. INTERMUN. CISLAV, CONFORME PROCESSO LICITATÓRIO 02/26, DISPENSA 01/26."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5782",
+                "serie": "NFS-E",
+                "emissao": "2026-05-08",
+                "vencimento": "2026-05-08",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000578226050000001699"
+              }
+            ]
+          }
+        ]
+      },
+      "diferenca": 0,
+      "status": "conciliado_por_total"
+    },
+    {
+      "municipio": "ITUMIRIM",
+      "host": "https://pt.itumirim.mg.gov.br",
+      "attempts": [
+        {
+          "creditor": "CISLAV",
+          "url": "https://pt.itumirim.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CISLAV",
+          "status": 200,
+          "count": 2
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE",
+          "url": "https://pt.itumirim.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE",
+          "status": 200,
+          "count": 1
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIP",
+          "url": "https://pt.itumirim.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE%20DOS%20MUNICIP",
+          "status": 200,
+          "count": 0
+        },
+        {
+          "creditor": "CONSÓRCIO INTERMUNICIPAL DE SAÚDE",
+          "url": "https://pt.itumirim.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONS%C3%93RCIO%20INTERMUNICIPAL%20DE%20SA%C3%9ADE",
+          "status": 200,
+          "count": 1
+        }
+      ],
+      "error": "",
+      "cislav": {
+        "total": 116750.08,
+        "quantidade": 2,
+        "datas": [
+          "2026-05-11",
+          "2026-05-20"
+        ],
+        "rows": [
+          {
+            "data": "2026-05-11",
+            "municipio": "ITUMIRIM",
+            "valor": 4151.48,
+            "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RAEIO - PM ITUMIRIM",
+            "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+            "idReceita": "17395001",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          },
+          {
+            "data": "2026-05-20",
+            "municipio": "ITUMIRIM",
+            "valor": 112598.6,
+            "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM ITUMIRIM",
+            "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+            "idReceita": "16319901",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          }
+        ]
+      },
+      "prefeitura": {
+        "total": 118741.48,
+        "quantidade": 3,
+        "datas": [
+          "2026-05-11",
+          "2026-05-20",
+          "2026-05-29"
+        ],
+        "notasFiscais": [
+          {
+            "municipio": "ITUMIRIM",
+            "empenho": "00048-004",
+            "valor": 4151.48,
+            "pagamento": "2026-05-11",
+            "notaFiscal": "5751",
+            "serie": "-",
+            "emissao": "2026-05-06",
+            "vencimento": "2026-06-06"
+          },
+          {
+            "municipio": "ITUMIRIM",
+            "empenho": "01325-000",
+            "valor": 112598.6,
+            "pagamento": "2026-05-20",
+            "notaFiscal": "5737",
+            "serie": "-",
+            "emissao": "2026-04-23",
+            "vencimento": "2026-05-23"
+          }
+        ],
+        "rows": [
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00048-004",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-06",
+              "dataDeLiquidacao": "2026-05-06",
+              "dataDePagamento": "2026-05-11",
+              "referencia": "00048000",
+              "unidade": "02.005.002 - FUNDO MUNICIPAL DE SAÚDE",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "0210 - ATEND. AMB., EMERGENCIAL E HOSPITALAR",
+              "projetoAtividade": "2007 - RATEIO DE CONSORCIOS MUNICIPAIS.",
+              "categoriaEconomica": "3.1.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 4151.48,
+              "descontos": [],
+              "credor": "CISLAV - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "DESPESA REFERENTE À / RATEIO MES 05/2026"
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5751",
+                "serie": "-",
+                "emissao": "2026-05-06",
+                "vencimento": "2026-06-06",
+                "autorizacaoParaImpressao": "",
+                "tipo": 3,
+                "chaveDeAcesso": ""
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "00000226 / 0",
+              "modalidade": "Dispensa - 00012026",
+              "requisicaoDeCompra": "26000317000",
+              "empenho": "01325-000",
+              "tipo": "EO - Empenho Ordinário",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-17",
+              "dataDeLiquidacao": "2026-04-23",
+              "dataDePagamento": "2026-05-20",
+              "referencia": "",
+              "unidade": "02.005.002 - FUNDO MUNICIPAL DE SAÚDE",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "0210 - ATEND. AMB., EMERGENCIAL E HOSPITALAR",
+              "projetoAtividade": "2068 - MANUTENÇÃO UNIDADES MEDICAS E POSTOS DE SAUDE",
+              "categoriaEconomica": "3.3.90.39.00 - OUTROS SERVIÇOS DE TERCEIROS - PESSOA JURÍDIC",
+              "tipoDeDespesa": "99 - OUTROS SERVIÇOS DE TERCEIROS  PESSOA JURÍDIC",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 112598.6,
+              "descontos": [],
+              "credor": "CISLAV - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "DESPESA REFERENTE À / CONTRATAÇÃO DE CONSÓRCIO PÚBLICO DE SAÚDE VISANDO A INTEGRAÇÃO DOS SERVIÇOS ASSISTENCIAIS EM REDE HIERÁRQUICA E DESCENTRALIZADA DE ATENDIMENTO, NO QUE TANGE À INTERMEDIAÇÃO DA PRESTAÇÃO DE SERVIÇOS DE EXAMES, CONSULTAS E CIRURGIAS/PROCEDIMENTOS ESPECIALIZADOS COM PROFISSIONAIS DA ÁREA DE SAÚDE"
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5737",
+                "serie": "-",
+                "emissao": "2026-04-23",
+                "vencimento": "2026-05-23",
+                "autorizacaoParaImpressao": "",
+                "tipo": 3,
+                "chaveDeAcesso": ""
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00470-007",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-29",
+              "dataDeLiquidacao": "2026-05-29",
+              "dataDePagamento": "2026-05-29",
+              "referencia": "00470000",
+              "unidade": "02.005.002 - FUNDO MUNICIPAL DE SAÚDE",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "0210 - ATEND. AMB., EMERGENCIAL E HOSPITALAR",
+              "projetoAtividade": "2007 - RATEIO DE CONSORCIOS MUNICIPAIS.",
+              "categoriaEconomica": "3.3.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 1991.4,
+              "descontos": [],
+              "credor": "CISSUL-CONSORCIO INTERMUNICIPAL DE SAUDE - CPF/CNPJ: 13.985.869/0001-84",
+              "cargo": "",
+              "historico": "DESPESA REFERENTE À / CISSUL MES 05/2026"
+            },
+            "notasFiscais": []
+          }
+        ]
+      },
+      "diferenca": 1991.4,
+      "status": "divergente_por_total"
+    },
+    {
+      "municipio": "LUMINÁRIAS",
+      "host": "https://pt.luminarias.mg.gov.br",
+      "attempts": [
+        {
+          "creditor": "CISLAV",
+          "url": "https://pt.luminarias.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CISLAV",
+          "status": 200,
+          "count": 6
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE",
+          "url": "https://pt.luminarias.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE",
+          "status": 200,
+          "count": 9
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIP",
+          "url": "https://pt.luminarias.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE%20DOS%20MUNICIP",
+          "status": 200,
+          "count": 0
+        },
+        {
+          "creditor": "CONSÓRCIO INTERMUNICIPAL DE SAÚDE",
+          "url": "https://pt.luminarias.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONS%C3%93RCIO%20INTERMUNICIPAL%20DE%20SA%C3%9ADE",
+          "status": 200,
+          "count": 9
+        }
+      ],
+      "error": "",
+      "cislav": {
+        "total": 195903.05,
+        "quantidade": 4,
+        "datas": [
+          "2026-05-05",
+          "2026-05-12",
+          "2026-05-21"
+        ],
+        "rows": [
+          {
+            "data": "2026-05-05",
+            "municipio": "LUMINÁRIAS",
+            "valor": 50000,
+            "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM LUMINÁRIAS",
+            "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+            "idReceita": "16319901",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          },
+          {
+            "data": "2026-05-05",
+            "municipio": "LUMINÁRIAS",
+            "valor": 41751.57,
+            "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM LUMINÁRIAS",
+            "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+            "idReceita": "16319901",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          },
+          {
+            "data": "2026-05-12",
+            "municipio": "LUMINÁRIAS",
+            "valor": 4151.48,
+            "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM LUMINÁRIAS",
+            "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+            "idReceita": "17395001",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          },
+          {
+            "data": "2026-05-21",
+            "municipio": "LUMINÁRIAS",
+            "valor": 100000,
+            "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM LUMINÁRIAS",
+            "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+            "idReceita": "16319901",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          }
+        ]
+      },
+      "prefeitura": {
+        "total": 197578.85,
+        "quantidade": 9,
+        "datas": [
+          "2026-05-05",
+          "2026-05-11",
+          "2026-05-12",
+          "2026-05-21"
+        ],
+        "notasFiscais": [
+          {
+            "municipio": "LUMINÁRIAS",
+            "empenho": "00105-005",
+            "valor": 2283.31,
+            "pagamento": "2026-05-12",
+            "notaFiscal": "5755",
+            "serie": "PS",
+            "emissao": "2026-05-06",
+            "vencimento": "2026-05-06"
+          },
+          {
+            "municipio": "LUMINÁRIAS",
+            "empenho": "00106-005",
+            "valor": 1234.24,
+            "pagamento": "2026-05-12",
+            "notaFiscal": "5755",
+            "serie": "PS",
+            "emissao": "2026-05-06",
+            "vencimento": "2026-05-06"
+          },
+          {
+            "municipio": "LUMINÁRIAS",
+            "empenho": "00107-005",
+            "valor": 633.93,
+            "pagamento": "2026-05-12",
+            "notaFiscal": "5755",
+            "serie": "PS",
+            "emissao": "2026-05-06",
+            "vencimento": "2026-05-06"
+          },
+          {
+            "municipio": "LUMINÁRIAS",
+            "empenho": "01212-003",
+            "valor": 50000,
+            "pagamento": "2026-05-05",
+            "notaFiscal": "5746",
+            "serie": "PS",
+            "emissao": "2026-04-24",
+            "vencimento": "2026-04-24"
+          },
+          {
+            "municipio": "LUMINÁRIAS",
+            "empenho": "01794-001",
+            "valor": 41751.57,
+            "pagamento": "2026-05-05",
+            "notaFiscal": "5745",
+            "serie": "PS",
+            "emissao": "2026-04-24",
+            "vencimento": "2026-04-24"
+          },
+          {
+            "municipio": "LUMINÁRIAS",
+            "empenho": "02192-001",
+            "valor": 100000,
+            "pagamento": "2026-05-21",
+            "notaFiscal": "5803",
+            "serie": "PS",
+            "emissao": "2026-05-20",
+            "vencimento": "2026-05-20"
+          }
+        ],
+        "rows": [
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00105-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-06",
+              "dataDeLiquidacao": "2026-05-06",
+              "dataDePagamento": "2026-05-12",
+              "referencia": "00105000",
+              "unidade": "02.014.001 - FUNDO MUNICIPAL DE SAUDE DE LUMINARIAS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - GESTÃO DE AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "2148 - MANUT ATIV. DE CONV CONSÓRCIO DE SAÚDE-CISLAV",
+              "categoriaEconomica": "3.1.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 2283.31,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE - CISLAV - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE RATEIO COM OBJETIVO DE RATEAR AS DESPESAS DO CONSORCIO INTERMUNICIPAL DE SAÚDE DA MICRORREGIÃO DE LAVRAS-CISLAVENTRE OS MUNICIPIOS CONSORCIADOS, CONFORME CONTRATO DE RATEIO NUMERO 008/2026, DURANTE O EXERCÍCIO FINANCEIRO DE 2026. REPASSE REATEIO REFERENTE AO MES DE MAIO DE 2026."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5755",
+                "serie": "PS",
+                "emissao": "2026-05-06",
+                "vencimento": "2026-05-06",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000575526050000001420"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00106-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-06",
+              "dataDeLiquidacao": "2026-05-06",
+              "dataDePagamento": "2026-05-12",
+              "referencia": "00106000",
+              "unidade": "02.014.001 - FUNDO MUNICIPAL DE SAUDE DE LUMINARIAS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - GESTÃO DE AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "2148 - MANUT ATIV. DE CONV CONSÓRCIO DE SAÚDE-CISLAV",
+              "categoriaEconomica": "3.3.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 1234.24,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE - CISLAV - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE RATEIO COM OBJETIVO DE RATEAR AS DESPESAS DO CONSORCIO INTERMUNICIPAL DE SAÚDE DA MICRORREGIÃO DE LAVRAS-CISLAV ENTRE OS MUNICIPIOS CONSORCIADOS, CONFORME CONTRATO DE RATEIO NUMERO 008/2026, DURANTE O EXERCÍCIO FINANCEIRO DE 2026. REPASSE REATEIO REFERENTE AO MES DE MAIO DE 2026."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5755",
+                "serie": "PS",
+                "emissao": "2026-05-06",
+                "vencimento": "2026-05-06",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000575526050000001420"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00107-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-06",
+              "dataDeLiquidacao": "2026-05-06",
+              "dataDePagamento": "2026-05-12",
+              "referencia": "00107000",
+              "unidade": "02.014.001 - FUNDO MUNICIPAL DE SAUDE DE LUMINARIAS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - GESTÃO DE AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "1199 - INVESTIMENTOS DESP CAPITAL RATEIO CONS CISLAV",
+              "categoriaEconomica": "4.4.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 633.93,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE - CISLAV - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE RATEIO COM OBJETIVO DE RATEAR AS DESPESAS DO CONSORCIO INTERMUNICIPAL DE SAÚDE DA MICRORREGIÃO DE LAVRAS-CISLAV ENTRE OS MUNICIPIOS CONSORCIADOS, CONFORME CONTRATO DE RATEIO NUMERO 008/2026, DURANTE O EXERCÍCIO FINANCEIRO DE 2026. REPASSE REATEIO REFERENTE AO MES DE MAIO DE 2026."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5755",
+                "serie": "PS",
+                "emissao": "2026-05-06",
+                "vencimento": "2026-05-06",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000575526050000001420"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "00020425 / 0",
+              "modalidade": "Dispensa - 00592025",
+              "requisicaoDeCompra": "26000512003",
+              "empenho": "01212-003",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-24",
+              "dataDeLiquidacao": "2026-04-24",
+              "dataDePagamento": "2026-05-05",
+              "referencia": "01212000",
+              "unidade": "02.014.001 - FUNDO MUNICIPAL DE SAUDE DE LUMINARIAS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - GESTÃO DE AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "2148 - MANUT ATIV. DE CONV CONSÓRCIO DE SAÚDE-CISLAV",
+              "categoriaEconomica": "3.3.90.39.00 - OUTROS SERVIÇOS DE TERCEIROS - PESSOA JURÍDIC",
+              "tipoDeDespesa": "36 - SERVIÇO MÉDICO-HOSPITALAR, ODONTOLÓGICO E LAB",
+              "fonteDeRecurso": "1.600.000 - TRANS.FUNDO A FUNDO SUS FEDERAL BLOCO MANUTEN",
+              "coTce": "0000  - SEM ACOMPANHAMENTO",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 50000,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE - CISLAV - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM INTEGRAÇAO DOS SERVIÇOS ASSISTENCIAIS EM REDE HIERÁRQUICA E DESCENTRALIZADA DE ATENDIMENTO, NO QUE TANGE À INTERMEDIAÇÃO DA PRESTAÇÃO DE SERVIÇOS DE EXAMES, CONSULTAS E CIRURGIAS/PROCEDIMENTOS ESPECIALIZADOS COM PROFISSIONAIS DA ÁREA DE SAÚDE. CONTA: 575852599-1"
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5746",
+                "serie": "PS",
+                "emissao": "2026-04-24",
+                "vencimento": "2026-04-24",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "3138203120373578800017200000000057462604000000133"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "00020425 / 0",
+              "modalidade": "Dispensa - 00592025",
+              "requisicaoDeCompra": "26000684001",
+              "empenho": "01794-001",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-24",
+              "dataDeLiquidacao": "2026-04-24",
+              "dataDePagamento": "2026-05-05",
+              "referencia": "01794000",
+              "unidade": "02.014.001 - FUNDO MUNICIPAL DE SAUDE DE LUMINARIAS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - GESTÃO DE AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "2148 - MANUT ATIV. DE CONV CONSÓRCIO DE SAÚDE-CISLAV",
+              "categoriaEconomica": "3.3.90.39.00 - OUTROS SERVIÇOS DE TERCEIROS - PESSOA JURÍDIC",
+              "tipoDeDespesa": "36 - SERVIÇO MÉDICO-HOSPITALAR, ODONTOLÓGICO E LAB",
+              "fonteDeRecurso": "1.621.000 - TRANS.FUNDO A FUNDO SUS GOVERNO ESTADUAL",
+              "coTce": "0000  - SEM ACOMPANHAMENTO",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 41751.57,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE - CISLAV - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM INTEGRAÇAO DOS SERVIÇOS ASSISTENCIAIS EM REDE HIERÁRQUICA E DESCENTRALIZADA DE ATENDIMENTO, NO QUE TANGE À INTERMEDIAÇÃO DA PRESTAÇÃO DE SERVIÇOS DE EXAMES, CONSULTAS E CIRURGIAS/PROCEDIMENTOS ESPECIALIZADOS COM PROFISSIONAIS DA ÁREA DE SAÚDE. CONTA: 66207-0"
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5745",
+                "serie": "PS",
+                "emissao": "2026-04-24",
+                "vencimento": "2026-04-24",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000574526040000001322"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "00020425 / 0",
+              "modalidade": "Dispensa - 00592025",
+              "requisicaoDeCompra": "26000782001",
+              "empenho": "02192-001",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-20",
+              "dataDeLiquidacao": "2026-05-20",
+              "dataDePagamento": "2026-05-21",
+              "referencia": "02192000",
+              "unidade": "02.014.001 - FUNDO MUNICIPAL DE SAUDE DE LUMINARIAS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - GESTÃO DE AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "2148 - MANUT ATIV. DE CONV CONSÓRCIO DE SAÚDE-CISLAV",
+              "categoriaEconomica": "3.3.90.39.00 - OUTROS SERVIÇOS DE TERCEIROS - PESSOA JURÍDIC",
+              "tipoDeDespesa": "36 - SERVIÇO MÉDICO-HOSPITALAR, ODONTOLÓGICO E LAB",
+              "fonteDeRecurso": "2.720.000 - TRANSF UNIÃO REF PETROLEO E GAS - FEP",
+              "coTce": "0000  - SEM ACOMPANHAMENTO",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 100000,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE - CISLAV - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM INTEGRAÇAO DOS SERVIÇOS ASSISTENCIAIS EM REDE HIERÁRQUICA E DESCENTRALIZADA DE ATENDIMENTO, NO QUE TANGE À INTERMEDIAÇÃO DA PRESTAÇÃO DE SERVIÇOS DE EXAMES, CONSULTAS E CIRURGIAS/PROCEDIMENTOS ESPECIALIZADOS COM PROFISSIONAIS DA ÁREA DE SAÚDE. "
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5803",
+                "serie": "PS",
+                "emissao": "2026-05-20",
+                "vencimento": "2026-05-20",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000580326050000001900"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00096-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-11",
+              "dataDeLiquidacao": "2026-05-11",
+              "dataDePagamento": "2026-05-11",
+              "referencia": "00096000",
+              "unidade": "02.014.001 - FUNDO MUNICIPAL DE SAUDE DE LUMINARIAS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - GESTÃO DE AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "2149 - MANUT ATIV. CONVÊNIO C/ CONSÓRCIO CISSUL/SAMU",
+              "categoriaEconomica": "3.1.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 908.35,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE MACRO REGIÃ - CPF/CNPJ: 13.985.869/0001-84",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE RATEIO AO CONSORCIO INTERMUNICIPAL DE SAUDE PARA GERENCIAMENTO DOS SERVIÇOS DE ATENDIMENTO DE URGÊNCIA EEMERGÊNCIA, NECESSÁRIOS A REALIZAÇÃO DAS DESPESAS OPERACIONAIS E ADMINISTRATIVOS DO CISSUL/SAMU, DURANTE O EXERCÍCIO DE 2026, CONFORME CONTRATO Nº 89/2026. REPASSE REFERENTE AO MÊS DE MAIO DE 2026."
+            },
+            "notasFiscais": []
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00097-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-11",
+              "dataDeLiquidacao": "2026-05-11",
+              "dataDePagamento": "2026-05-11",
+              "referencia": "00097000",
+              "unidade": "02.014.001 - FUNDO MUNICIPAL DE SAUDE DE LUMINARIAS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - GESTÃO DE AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "2149 - MANUT ATIV. CONVÊNIO C/ CONSÓRCIO CISSUL/SAMU",
+              "categoriaEconomica": "3.3.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 574.77,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE MACRO REGIÃ - CPF/CNPJ: 13.985.869/0001-84",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE RATEIO AO CONSORCIO INTERMUNICIPAL DE SAUDE PARA GERENCIAMENTO DOS SERVIÇOS DE ATENDIMENTO DE URGÊNCIA E EMERGÊNCIA, NECESSÁRIOS A REALIZAÇÃO DAS DESPESAS OPERACIONAIS E ADMINISTRATIVOS DO CISSUL/SAMU, DURANTE O EXERCÍCIO DE 2026, CONFORME CONTRATO Nº 89/2026. REPASSE REFERENTE AO MÊS DE MAIO DE 2026."
+            },
+            "notasFiscais": []
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00098-005",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-05-11",
+              "dataDeLiquidacao": "2026-05-11",
+              "dataDePagamento": "2026-05-11",
+              "referencia": "00098000",
+              "unidade": "02.014.001 - FUNDO MUNICIPAL DE SAUDE DE LUMINARIAS",
+              "funcao": "10 - SAUDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "1006 - GESTÃO DE AÇÕES EM SERVIÇOS DE SAÚDE DIVERSOS",
+              "projetoAtividade": "1178 - INVESTIMENTO MANT CONSORCIO SAUDE-SISSUL/SAMU",
+              "categoriaEconomica": "4.4.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 192.68,
+              "descontos": [],
+              "credor": "CONSORCIO INTERMUNICIPAL DE SAUDE MACRO REGIÃ - CPF/CNPJ: 13.985.869/0001-84",
+              "cargo": "",
+              "historico": "VALOR QUE SE EMPENHA REFERENTE A COBRIR DESPESAS / COM CONTRATO DE RATEIO AO CONSORCIO INTERMUNICIPAL DE SAUDE PARA GERENCIAMENTO DOS SERVIÇOS DE ATENDIMENTO DE URGÊNCIA E EMERGÊNCIA, NECESSÁRIOS A REALIZAÇÃO DAS DESPESAS OPERACIONAIS E ADMINISTRATIVOS DO CISSUL/SAMU, DURANTE O EXERCÍCIO DE 2026, CONFORME CONTRATO Nº 89/2026. REPASSE REFERENTE AO MÊS DE MAIO DE 2026."
+            },
+            "notasFiscais": []
+          }
+        ]
+      },
+      "diferenca": 1675.8,
+      "status": "divergente_por_total"
+    },
+    {
+      "municipio": "NAZARENO",
+      "host": "https://pt.nazareno.mg.gov.br",
+      "attempts": [
+        {
+          "creditor": "CISLAV",
+          "url": "https://pt.nazareno.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CISLAV",
+          "status": 200,
+          "count": 3
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE",
+          "url": "https://pt.nazareno.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE",
+          "status": 200,
+          "count": 0
+        },
+        {
+          "creditor": "CONSORCIO INTERMUNICIPAL DE SAUDE DOS MUNICIP",
+          "url": "https://pt.nazareno.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONSORCIO%20INTERMUNICIPAL%20DE%20SAUDE%20DOS%20MUNICIP",
+          "status": 200,
+          "count": 0
+        },
+        {
+          "creditor": "CONSÓRCIO INTERMUNICIPAL DE SAÚDE",
+          "url": "https://pt.nazareno.mg.gov.br/api/relatorios/despesa?unidade_gestora=1&exercicio=2026&data_de_pagamento_inicial=2026-05-01&data_de_pagamento_final=2026-05-31&credor=CONS%C3%93RCIO%20INTERMUNICIPAL%20DE%20SA%C3%9ADE",
+          "status": 200,
+          "count": 0
+        }
+      ],
+      "error": "",
+      "cislav": {
+        "total": 4151.48,
+        "quantidade": 1,
+        "datas": [
+          "2026-05-05"
+        ],
+        "rows": [
+          {
+            "data": "2026-05-05",
+            "municipio": "NAZARENO",
+            "valor": 4151.48,
+            "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+            "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM NAZARENO",
+            "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+            "idReceita": "17395001",
+            "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+          }
+        ]
+      },
+      "prefeitura": {
+        "total": 4151.48,
+        "quantidade": 3,
+        "datas": [
+          "2026-05-05"
+        ],
+        "notasFiscais": [
+          {
+            "municipio": "NAZARENO",
+            "empenho": "00041-004",
+            "valor": 633.93,
+            "pagamento": "2026-05-05",
+            "notaFiscal": "5723",
+            "serie": "NFSE",
+            "emissao": "2026-04-07",
+            "vencimento": "2026-05-07"
+          },
+          {
+            "municipio": "NAZARENO",
+            "empenho": "00042-004",
+            "valor": 2283.31,
+            "pagamento": "2026-05-05",
+            "notaFiscal": "5723",
+            "serie": "NFSE",
+            "emissao": "2026-04-07",
+            "vencimento": "2026-05-07"
+          },
+          {
+            "municipio": "NAZARENO",
+            "empenho": "00043-004",
+            "valor": 1234.24,
+            "pagamento": "2026-05-05",
+            "notaFiscal": "5723",
+            "serie": "NFSE",
+            "emissao": "2026-04-07",
+            "vencimento": "2026-05-07"
+          }
+        ],
+        "rows": [
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00041-004",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-07",
+              "dataDeLiquidacao": "2026-04-07",
+              "dataDePagamento": "2026-05-05",
+              "referencia": "00041000",
+              "unidade": "02.005.002 - FUNDO MUNICIPAL DE SAÚDE",
+              "funcao": "10 - SAÚDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "0039 - MANUTENÇÃO DO CONSÓRCIO CISLAV",
+              "projetoAtividade": "1279 - CONTRATO DE RATEIO CONSÓRCIO PÚBLICO - CISLAV",
+              "categoriaEconomica": "4.4.71.70.00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 633.93,
+              "descontos": [],
+              "credor": "CISLAV- CONSORCIO INTERMUNICIPA REG. LAVRAS - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "IMPORTANCIA QUE SE EMPENHA REFERENTE / AO CONTRATO DE RATEIO DO EXERCICIO 2026 - CISLAV."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5723",
+                "serie": "NFSE",
+                "emissao": "2026-04-07",
+                "vencimento": "2026-05-07",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000572326040000001109"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00042-004",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-07",
+              "dataDeLiquidacao": "2026-04-07",
+              "dataDePagamento": "2026-05-05",
+              "referencia": "00042000",
+              "unidade": "02.005.002 - FUNDO MUNICIPAL DE SAÚDE",
+              "funcao": "10 - SAÚDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "0039 - MANUTENÇÃO DO CONSÓRCIO CISLAV",
+              "projetoAtividade": "2307 - CONTRATO DE RATEIO CONSÓRCIO PÚBLICO - CISLAV",
+              "categoriaEconomica": "3.1.71.70.00 - VENCIMENTOS E ENCARGOS SOCIAIS",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 2283.31,
+              "descontos": [],
+              "credor": "CISLAV- CONSORCIO INTERMUNICIPA REG. LAVRAS - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "IMPORTANCIA QUE SE EMPENHA REFERENTE / AO CONTRATO DE RATEIO DO EXERCICIO 2026 - CISLAV."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5723",
+                "serie": "NFSE",
+                "emissao": "2026-04-07",
+                "vencimento": "2026-05-07",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000572326040000001109"
+              }
+            ]
+          },
+          {
+            "dadosPrincipais": {
+              "licitacao": "",
+              "modalidade": "",
+              "requisicaoDeCompra": "",
+              "empenho": "00043-004",
+              "tipo": "SE - Sub Empenho",
+              "exercicio": 2026,
+              "dataDoEmpenho": "2026-04-07",
+              "dataDeLiquidacao": "2026-04-07",
+              "dataDePagamento": "2026-05-05",
+              "referencia": "00043000",
+              "unidade": "02.005.002 - FUNDO MUNICIPAL DE SAÚDE",
+              "funcao": "10 - SAÚDE",
+              "subfuncao": "302 - ASSISTENCIA HOSPITALAR E AMBULATORIAL",
+              "programa": "0039 - MANUTENÇÃO DO CONSÓRCIO CISLAV",
+              "projetoAtividade": "2307 - CONTRATO DE RATEIO CONSÓRCIO PÚBLICO - CISLAV",
+              "categoriaEconomica": "3.3.71.70.00 -  RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLIC",
+              "tipoDeDespesa": "00 - RATEIO PELA PARTICIPAÇÃO EM CONSÓRCIO PÚBLICO",
+              "fonteDeRecurso": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+              "coTce": "1002  - SAÚDE 15%",
+              "coAux": "0000  - SEM ACOMPANHAMENTO",
+              "valor": 1234.24,
+              "descontos": [],
+              "credor": "CISLAV- CONSORCIO INTERMUNICIPA REG. LAVRAS - CPF/CNPJ: 03.735.788/0001-72",
+              "cargo": "",
+              "historico": "IMPORTANCIA QUE SE EMPENHA REFERENTE / AO CONTRATO DE RATEIO DO EXERCICIO 2026 - CISLAV."
+            },
+            "notasFiscais": [
+              {
+                "codigo": "0001",
+                "notaFiscal": "5723",
+                "serie": "NFSE",
+                "emissao": "2026-04-07",
+                "vencimento": "2026-05-07",
+                "autorizacaoParaImpressao": "",
+                "tipo": 2,
+                "chaveDeAcesso": "31382031203735788000172000000000572326040000001109"
+              }
+            ]
+          }
+        ]
+      },
+      "diferenca": 0,
+      "status": "conciliado_por_total"
+    }
+  ]
+}

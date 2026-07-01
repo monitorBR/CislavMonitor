@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-06-30",
+  "automaticSources": [
+    { "municipalityId": "carrancas", "name": "Carrancas", "sourceType": "SH3 API", "url": "https://ptn.carrancas.mg.gov.br", "status": "automatico" },
+    { "municipalityId": "ibituruna", "name": "Ibituruna", "sourceType": "SH3 API", "url": "https://pt.ibituruna.mg.gov.br", "status": "automatico" },
+    { "municipalityId": "ijaci", "name": "Ijaci", "sourceType": "SH3 API", "url": "https://transparencia.ijaci.mg.gov.br", "status": "automatico" },
+    { "municipalityId": "ingai", "name": "Ingai", "sourceType": "SH3 API", "url": "https://pt.ingai.mg.gov.br", "status": "automatico" },
+    { "municipalityId": "itumirim", "name": "Itumirim", "sourceType": "SH3 API", "url": "https://pt.itumirim.mg.gov.br", "status": "automatico" },
+    { "municipalityId": "luminarias", "name": "Luminarias", "sourceType": "SH3 API", "url": "https://pt.luminarias.mg.gov.br", "status": "automatico" },
+    { "municipalityId": "nazareno", "name": "Nazareno", "sourceType": "SH3 API", "url": "https://pt.nazareno.mg.gov.br", "status": "automatico" }
+  ],
+  "alternateSources": [
+    { "municipalityId": "lavras", "name": "Lavras", "sourceType": "Portal Cidadão / CSV Analítico de Empenhos", "url": "https://sistemas.lavras.mg.gov.br/portalcidadao/", "status": "importacao_csv", "notes": "Parser local para o CSV Analítico de Empenhos; cron usa LAVRAS_CSV_PATH quando disponível." },
+    { "municipalityId": "bom-sucesso", "name": "Bom Sucesso", "sourceType": "Memory LAI", "url": "https://ilai.memory.com.br/#/entidades/login/98CSD1/1/", "status": "somente_cislav", "notes": "Portal municipal identificado, mas sem extração confiável; dashboard usa dados do CISLAV e marca ausência de conciliação municipal." },
+    { "municipalityId": "ribeirao-vermelho", "name": "Ribeirão Vermelho", "sourceType": "Memory LAI", "url": "http://lai.memory.com.br/entidades/login/9CRCL5", "status": "somente_cislav", "notes": "Portal municipal identificado, mas bloqueia/impede extração confiável; dashboard usa dados do CISLAV e marca ausência de conciliação municipal." },
+    { "municipalityId": "nepomuceno", "name": "Nepomuceno", "sourceType": "Portal Acesso à Informação / CSV padrão em coluna", "url": "https://acessoainformacao.nepomuceno.mg.gov.br/cidadao/transparencia/despesas", "status": "importacao_csv", "notes": "Parser local para o CSV padrão em coluna; registros encontrados a partir de 2026, com contratos municipais de janeiro/2026." },
+    { "municipalityId": "itutinga", "name": "Itutinga", "sourceType": "Site oficial sem endpoint localizado", "url": "https://itutinga.mg.gov.br/", "status": "somente_cislav", "notes": "Portal de despesas não localizado; dashboard usa dados do CISLAV e marca ausência de conciliação municipal." }
+  ]
+}

@@ -1,0 +1,374 @@
+{
+  "generatedAt": "2026-06-30T11:55:27.506Z",
+  "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05",
+  "period": {
+    "year": "2026",
+    "monthStart": "05",
+    "monthEnd": "05"
+  },
+  "totalRows": 318,
+  "transferRows": 25,
+  "summaryByMunicipality": [
+    {
+      "municipio": "BOM SUCESSO",
+      "total": 301235.11,
+      "quantidade": 2,
+      "datas": [
+        "2026-05-14",
+        "2026-05-25"
+      ]
+    },
+    {
+      "municipio": "CARRANCAS",
+      "total": 225225.56,
+      "quantidade": 2,
+      "datas": [
+        "2026-05-15",
+        "2026-05-29"
+      ]
+    },
+    {
+      "municipio": "IBITURUNA",
+      "total": 79755.62,
+      "quantidade": 2,
+      "datas": [
+        "2026-05-08",
+        "2026-05-08"
+      ]
+    },
+    {
+      "municipio": "IJACÍ",
+      "total": 151896.4,
+      "quantidade": 1,
+      "datas": [
+        "2026-05-14"
+      ]
+    },
+    {
+      "municipio": "INGAÍ",
+      "total": 48674.95999999999,
+      "quantidade": 3,
+      "datas": [
+        "2026-05-08",
+        "2026-05-19",
+        "2026-05-20"
+      ]
+    },
+    {
+      "municipio": "ITUMIRIM",
+      "total": 116750.08,
+      "quantidade": 2,
+      "datas": [
+        "2026-05-11",
+        "2026-05-20"
+      ]
+    },
+    {
+      "municipio": "ITUTINGA",
+      "total": 220361.08000000005,
+      "quantidade": 5,
+      "datas": [
+        "2026-05-08",
+        "2026-05-12",
+        "2026-05-22",
+        "2026-05-27",
+        "2026-05-27"
+      ]
+    },
+    {
+      "municipio": "LAVRAS",
+      "total": 40742.01,
+      "quantidade": 1,
+      "datas": [
+        "2026-05-26"
+      ]
+    },
+    {
+      "municipio": "LUMINÁRIAS",
+      "total": 195903.05,
+      "quantidade": 4,
+      "datas": [
+        "2026-05-05",
+        "2026-05-05",
+        "2026-05-12",
+        "2026-05-21"
+      ]
+    },
+    {
+      "municipio": "NAZARENO",
+      "total": 4151.48,
+      "quantidade": 1,
+      "datas": [
+        "2026-05-05"
+      ]
+    },
+    {
+      "municipio": "NEPOMUCENO",
+      "total": 164645.73,
+      "quantidade": 1,
+      "datas": [
+        "2026-05-14"
+      ]
+    },
+    {
+      "municipio": "RIBEIRÃO VERMELHO",
+      "total": 4151.48,
+      "quantidade": 1,
+      "datas": [
+        "2026-05-14"
+      ]
+    }
+  ],
+  "transfers": [
+    {
+      "data": "2026-05-05",
+      "municipio": "LUMINÁRIAS",
+      "valor": 50000,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM LUMINÁRIAS",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-05",
+      "municipio": "LUMINÁRIAS",
+      "valor": 41751.57,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM LUMINÁRIAS",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-05",
+      "municipio": "NAZARENO",
+      "valor": 4151.48,
+      "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM NAZARENO",
+      "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+      "idReceita": "17395001",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-08",
+      "municipio": "ITUTINGA",
+      "valor": 130261.38,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM ITUTINGA",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-08",
+      "municipio": "IBITURUNA",
+      "valor": 75604.14,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM IBITURUNA",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-08",
+      "municipio": "INGAÍ",
+      "valor": 4151.48,
+      "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM INGAÍ",
+      "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+      "idReceita": "17395001",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-08",
+      "municipio": "IBITURUNA",
+      "valor": 4151.48,
+      "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM IBITURUNA",
+      "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+      "idReceita": "17395001",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-11",
+      "municipio": "ITUMIRIM",
+      "valor": 4151.48,
+      "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RAEIO - PM ITUMIRIM",
+      "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+      "idReceita": "17395001",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-12",
+      "municipio": "ITUTINGA",
+      "valor": 4151.48,
+      "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM ITUTINGA",
+      "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+      "idReceita": "17395001",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-12",
+      "municipio": "LUMINÁRIAS",
+      "valor": 4151.48,
+      "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM LUMINÁRIAS",
+      "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+      "idReceita": "17395001",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-14",
+      "municipio": "BOM SUCESSO",
+      "valor": 135322.5,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM BOM SUCESSO",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-14",
+      "municipio": "IJACÍ",
+      "valor": 151896.4,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM IJACÍ",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-14",
+      "municipio": "NEPOMUCENO",
+      "valor": 164645.73,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM NEPOMUCENO",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-14",
+      "municipio": "RIBEIRÃO VERMELHO",
+      "valor": 4151.48,
+      "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM RIBEIRÃO VERMELHO",
+      "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+      "idReceita": "17395001",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-15",
+      "municipio": "CARRANCAS",
+      "valor": 4151.48,
+      "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM CARRANCAS",
+      "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+      "idReceita": "17395001",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-19",
+      "municipio": "INGAÍ",
+      "valor": 40372,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM INGAÍ",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-20",
+      "municipio": "ITUMIRIM",
+      "valor": 112598.6,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM ITUMIRIM",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-20",
+      "municipio": "INGAÍ",
+      "valor": 4151.48,
+      "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM INGAÍ",
+      "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+      "idReceita": "17395001",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-21",
+      "municipio": "LUMINÁRIAS",
+      "valor": 100000,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM LUMINÁRIAS",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-22",
+      "municipio": "ITUTINGA",
+      "valor": 2562.92,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DO TRANSPORTA SUS - PM ITUTINGA",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-25",
+      "municipio": "BOM SUCESSO",
+      "valor": 165912.61,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM BOM SUCESSO",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-26",
+      "municipio": "LAVRAS",
+      "valor": 40742.01,
+      "categoria": "TRANSFERÊNCIAS DE MUNICÍPIOS A CONSÓRCIOS PÚB",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO CONTRATO DE RATEIO - PM LAVRAS",
+      "fonteDeRecursos": "1.500.000 - RECURSOS NÃO VINCULADOS DE IMPOSTOS",
+      "idReceita": "17395001",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-27",
+      "municipio": "ITUTINGA",
+      "valor": 80867.7,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM ITUTINGA",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-27",
+      "municipio": "ITUTINGA",
+      "valor": 2517.6,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DO TRANSPORTA SUS - PM ITUTINGA",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    },
+    {
+      "data": "2026-05-29",
+      "municipio": "CARRANCAS",
+      "valor": 221074.08,
+      "categoria": "OUTROS SERVIÇOS DE ATENDIMENTO À SAÚDE - PRIN",
+      "historico": "RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM CARRANCAS",
+      "fonteDeRecursos": "1.659.002 - OUTROS RECURSOS VINCULADOS A SAÚDE",
+      "idReceita": "16319901",
+      "sourceUrl": "https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05"
+    }
+  ]
+}

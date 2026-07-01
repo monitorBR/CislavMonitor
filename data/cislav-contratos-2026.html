@@ -1,0 +1,58 @@
+
+
+<SCRIPT>
+	function exibirDadosLicitacao(INT_LICI, C_ADT, CHAR_ID_EMP){
+		var janelinha = window.open("/Relatorios/Dados_Licitacao.php?INT_LICI=" + INT_LICI + "&C_ADT=" + C_ADT+"&CHAR_ID_EMP=" + CHAR_ID_EMP, "janelinha", "width=700,height=400,scrollbars=yes");
+		janelinha.focus();
+	}
+</SCRIPT>
+
+<BR><SCRIPT>
+							preencherPaginador(0);
+							preencherTotalRegistros(0);
+						</SCRIPT><P class='alerta'>Nenhuma informa��o foi encontrada na busca. </P></DIV></CENTER></BR><DIV class='dataimpressao_atualizacao'>�ltima atualiza��o: 29/06/2026 12:35:12 &nbsp; &nbsp; &nbsp; Data de Visualiza��o/Impress�o: 30/06/2026 09:02:28 &nbsp; &nbsp; &nbsp; Esta consulta levou: menos de 1 segundo.</DIV><SCRIPT>objeto('btn_csv').setAttribute('href', 'javascript:converterPara("6a43b0549cba830062026090228", "CSV")');
+					  objeto('btn_csv').style.display = 'inline-block';
+					 objeto('btn_pdf').setAttribute('href', 'javascript:converterPara("6a43b0549cba830062026090228", "PDF")');
+						objeto('btn_pdf').style.display = 'inline-block';
+						objeto('btn_xls').setAttribute('href', 'javascript:converterPara("6a43b0549cba830062026090228", "XLS")');
+					  objeto('btn_xls').style.display = 'inline-block';
+					 </SCRIPT><SCRIPT>
+                        if($('.alerta').is(':visible')){
+                            $('#resultadoContasPublicas').html("<DIV class='barra_tarefas'></DIV>");
+                            $('#msg-resultado').text('Nenhum resultado foi encontrado para a busca solicitada.');
+                            objeto('btn_imprimir').style.display = 'none';
+                            objeto('btn_destacar').style.display = 'none';
+                            objeto('btn_csv').style.display = 'none';
+                            objeto('btn_xls').style.display = 'none';
+                            objeto('btn_pdf').style.display = 'none';
+
+                            objeto('btn_nova_busca').style.display = 'inline-block';
+                            objeto('area_botoes_nova').style.display = 'block';
+                            objeto('Formulario').style.display = 'none';
+                            objeto('Paginador').style.display = 'none';
+                            
+                        }
+                        else if($('.alerta_anexo_4320').is(':visible')){				
+                            objeto('btn_imprimir').style.display = 'none';
+                            objeto('btn_destacar').style.display = 'none';
+                            objeto('btn_csv').style.display = 'none';
+                            objeto('btn_xls').style.display = 'none';
+                            objeto('btn_pdf').style.display = 'none';
+
+                            objeto('btn_nova_busca').style.display = 'inline-block';
+                            objeto('area_botoes_nova').style.display = 'block';
+                            objeto('Formulario').style.display = 'none';
+                            objeto('Paginador').style.display = 'none';
+                        }
+                        else{
+                            $('#msg-resultado').text('Agora que seu relat�rio ficou pronto, o que deseja fazer?');
+				
+                            objeto('btn_imprimir').style.display = 'inline-block';
+                            objeto('btn_destacar').style.display = 'inline-block';
+                            objeto('btn_nova_busca').style.display = 'inline-block';
+                            
+                            objeto('area_botoes_nova').style.display = 'block';
+                            objeto('Paginador').style.display = 'block';
+                            objeto('Formulario').style.display = 'none';
+                        }
+                    </SCRIPT>
