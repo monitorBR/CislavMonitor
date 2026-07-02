@@ -414,8 +414,8 @@ export default function Home() {
   const expenseAnalysis = selected ? (() => {
     if (expenseMatches.length === 0) {
       return likelyProviders.length
-        ? { tone: 'yellow', title: 'Prestador provável, sem empenho localizado', text: 'O nome/documento parece compatível com a lista de prestadores assistenciais, mas ainda não há despesa importada do CISLAV que bata com a NF informada. Possível causa: NF ainda não empenhada/liquidada ou base de despesas incompleta.' }
-        : { tone: 'gray', title: 'Sem evidência na base importada', text: 'Não há prestador provável nem despesa do CISLAV compatível com os dados informados. Confira CPF/CNPJ, razão social e número da NF, ou importe o analítico de despesas do período.' }
+        ? { tone: 'yellow', title: 'Prestador provável, sem empenho público localizado', text: 'O nome/documento parece compatível com a lista de prestadores assistenciais, mas ainda não há despesa pública do CISLAV que bata com a NF informada. Possível causa: NF ainda não empenhada/liquidada, detalhe público sem CPF/CNPJ/NF ou base pública incompleta.' }
+        : { tone: 'gray', title: 'Sem evidência nas fontes públicas', text: 'Não há prestador provável nem despesa pública do CISLAV compatível com os dados informados. Confira CPF/CNPJ, razão social e número da NF. Importações locais entram apenas como evidência complementar no navegador.' }
     }
     const openAmount = expenseMatches.reduce((sum, expense) => sum + expenseOpenAmount(expense), 0)
     const maxDelay = Math.max(...expenseMatches.map((expense) => expenseDelay(expense, today)))
@@ -460,7 +460,7 @@ export default function Home() {
     if (!selected) return
     const document = normalizeDocument(selected.professionalDocument)
     if (!document) {
-      setProviderSearchFeedback('Informe o CPF/CNPJ do prestador para buscar na base importada.')
+      setProviderSearchFeedback('Informe o CPF/CNPJ do prestador para buscar nas fontes públicas já importadas e na produção local opcional.')
       return
     }
     const provider = assistanceProviders.find((item) => normalizeDocument(item.document) === document)
@@ -471,18 +471,18 @@ export default function Home() {
       updateSelected('professionalName', provider?.name ?? cleanProviderName(productionProvider.providerName))
     }
     const providerText = provider
-      ? `prestador identificado: ${provider.name}`
+      ? `prestador identificado nas fontes públicas: ${provider.name}`
       : productionProvider
-        ? `prestador identificado na produção importada: ${cleanProviderName(productionProvider.providerName)}`
-        : 'prestador ainda não identificado na lista provável ou produção importada'
-    const expenseText = expenses.length ? `${expenses.length} NF/despesa do CISLAV encontrada(s) para este documento` : 'nenhuma despesa do CISLAV encontrada para este documento'
-    const productionText = productionRecords.length ? `${productionRecords.length} linha(s) de produção assistencial encontrada(s)` : 'nenhuma produção assistencial importada para este documento'
+        ? `prestador identificado na produção local opcional: ${cleanProviderName(productionProvider.providerName)}`
+        : 'prestador ainda não identificado nas fontes públicas ou produção local opcional'
+    const expenseText = expenses.length ? `${expenses.length} NF/despesa pública do CISLAV encontrada(s) para este documento` : 'nenhuma despesa pública do CISLAV encontrada para este documento'
+    const productionText = productionRecords.length ? `${productionRecords.length} linha(s) de produção local encontrada(s)` : 'nenhuma produção local opcional para este documento'
     setProviderSearchFeedback(`${providerText}; ${expenseText}; ${productionText}. Confira os candidatos na seção de checagem abaixo.`)
   }
   function importAssistentialProduction() {
     const rows = parseDelimitedRows(productionCsv)
     if (rows.length < 2) {
-      setProductionImportFeedback('Cole o CSV exportado do Faturamento antes de importar.')
+      setProductionImportFeedback('Cole o CSV exportado pelo usuário antes de importar.')
       return
     }
     const headers = rows[0]
@@ -544,7 +544,7 @@ export default function Home() {
   return <main className="min-h-screen">
     <header className="border-b border-emerald-900/10 bg-white">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-5">
-        <div><p className="text-sm font-semibold text-leaf">PWA local e auditável</p><h1 className="text-2xl font-bold tracking-normal text-ink">Monitoramento CISLAV</h1></div>
+        <div><p className="text-sm font-semibold text-leaf">Fontes públicas e auditáveis</p><h1 className="text-2xl font-bold tracking-normal text-ink">Monitoramento CISLAV</h1></div>
         <button onClick={addInvoice} className="focus-ring inline-flex items-center gap-2 rounded-md bg-leaf px-4 py-2 text-sm font-semibold text-white"><Plus size={18}/>Nova NF</button>
       </div>
     </header>
@@ -567,6 +567,12 @@ export default function Home() {
           <Card title="Risco financeiro" icon={<Gauge size={18}/>}><div className="flex items-center gap-2"><span className="text-2xl font-bold">{metrics.risk.score}</span><Pill tone={metrics.risk.level}>{metrics.risk.level}</Pill></div><p className="text-sm text-slate-600">{metrics.risk.reason}</p></Card>
           <Card title="Médias" icon={<Banknote size={18}/>}><p className="text-sm">NFs: <strong>{metrics.avgNFDelay.toFixed(1)} dias</strong></p><p className="text-sm">Prefeituras: <strong>{metrics.avgTransferDelay.toFixed(1)} dias</strong></p></Card>
         </div>
+
+        <Card title="Modo de dados" icon={<CheckSquare size={18}/>}>
+          <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-950">
+            A atualização automática usa somente fontes públicas: portal do CISLAV, portais municipais conciliáveis, CSVs públicos importados e arquivos versionados no repositório. Dados de sistemas autenticados de prestadores não entram no cron nem são publicados; quando o usuário cola um CSV manualmente, ele fica apenas no navegador como evidência complementar.
+          </div>
+        </Card>
 
         {selected && <Card title="Detalhes e cálculo da NF" icon={<FileText size={18}/>}>
           <div className="grid gap-3 md:grid-cols-3">
@@ -607,15 +613,15 @@ export default function Home() {
           <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Competência e caixa:</strong> a NFSe emitida em {selectedCashMonth} representa atendimentos de {selectedServiceMonth}, mas o risco de fluxo de caixa é comparado com os repasses de {selectedCashMonth}, mês em que a NFSe entrou para cobrança. O aceite define apenas o prazo de pagamento ao profissional.</div>
         </Card>}
 
-        {selected && <Card title="Produção assistencial importada" icon={<Upload size={18}/>}>
+        {selected && <Card title="Produção assistencial local (opcional)" icon={<Upload size={18}/>}>
           <div className={`mb-3 rounded-md p-3 text-sm ring-1 ${statusClass(productionTone)}`}>
             <strong>{productionTitle}:</strong> {selectedProductions.length
               ? `${selectedProductions.length} linha(s), total de ${money.format(selectedProductionTotal)} para a competência assistencial ${selectedServiceMonth}. Diferença contra a NF: ${money.format(productionDifference)}.`
-              : 'Exporte no sistema do prestador em Faturamento > Gerar Planilha e cole aqui o CSV. Use preferencialmente Sintético, Empenho por Município ou Extrato Prestador.'}
+              : 'Opcionalmente cole um CSV exportado pelo usuário. Estes dados não vêm do cron público e ficam somente neste navegador.'}
           </div>
           <div className="grid gap-3 lg:grid-cols-[1.2fr_1fr]">
             <div>
-              <p className="mb-2 text-sm text-slate-600">Cole CSV com cabeçalho. O app reconhece colunas como Município, Fornecedor, Profissional, Data, Procedimento, QTD, Valor, Valor Unitário e Valor Total. Dados de pacientes não são exibidos.</p>
+              <p className="mb-2 text-sm text-slate-600">Cole CSV com cabeçalho somente quando quiser complementar a análise localmente. O app reconhece colunas como Município, Fornecedor, Profissional, Data, Procedimento, QTD, Valor, Valor Unitário e Valor Total. Dados de pacientes não são exibidos.</p>
               <textarea value={productionCsv} onChange={(event) => { setProductionCsv(event.target.value); setProductionImportFeedback('') }} className="min-h-28 w-full rounded-md border p-2 font-mono text-xs" placeholder={'Município;Fornecedor;Profissional;Data;Procedimento;QTD;Valor Total\nLavras;Clinica Exemplo;Dra. Exemplo;15/04/2026;Consulta;10;10000,00'} />
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <button onClick={importAssistentialProduction} className="focus-ring inline-flex items-center gap-2 rounded-md bg-ink px-4 py-2 text-sm font-semibold text-white"><Upload size={16}/>Importar produção</button>
@@ -628,7 +634,7 @@ export default function Home() {
               <div className="grid gap-2 text-sm">
                 <div className="rounded border border-slate-200 bg-white p-2"><span className="block text-xs font-semibold uppercase text-slate-500">Total produção</span><strong>{money.format(selectedProductionTotal)}</strong></div>
                 <div className="rounded border border-slate-200 bg-white p-2"><span className="block text-xs font-semibold uppercase text-slate-500">Municípios na produção</span>{selectedProductionMunicipalities.length ? selectedProductionMunicipalities.join(', ') : 'sem produção compatível'}</div>
-                <div className="rounded border border-slate-200 bg-white p-2"><span className="block text-xs font-semibold uppercase text-slate-500">Base importada</span>{productions.length} linha(s) de produção no navegador</div>
+                <div className="rounded border border-slate-200 bg-white p-2"><span className="block text-xs font-semibold uppercase text-slate-500">Base local</span>{productions.length} linha(s) de produção no navegador</div>
               </div>
               {selectedProductions.length > 0 && <div className="mt-3 max-h-52 overflow-auto rounded border border-slate-200 bg-white">
                 {selectedProductions.slice(0, 8).map((production) => <div key={production.id} className="border-b border-slate-100 p-2 text-xs last:border-b-0">
@@ -636,12 +642,12 @@ export default function Home() {
                   <span className="block text-slate-600">{production.procedureName ?? 'Procedimento não informado'} · QTD {production.quantity}</span>
                 </div>)}
               </div>}
-              <p className="mt-3 text-xs text-slate-600">Produção assistencial valida prestação/competência/municípios. Pagamento continua sendo conferido pelas despesas públicas do CISLAV.</p>
+              <p className="mt-3 text-xs text-slate-600">Produção assistencial local ajuda a validar prestação/competência/municípios. Pagamento continua sendo conferido pelas despesas públicas do CISLAV.</p>
             </div>
           </div>
         </Card>}
 
-        {selected && <Card title="Checagem na base CISLAV" icon={<CheckSquare size={18}/>}>
+        {selected && <Card title="Checagem em fontes públicas CISLAV" icon={<CheckSquare size={18}/>}>
           <div className={`mb-3 rounded-md p-3 text-sm ring-1 ${statusClass(expenseAnalysis?.tone ?? 'gray')}`}><strong>{expenseAnalysis?.title}:</strong> {expenseAnalysis?.text}</div>
           {providerTimingStats && <div className="mb-3 grid gap-2 md:grid-cols-3">
             <div className="rounded-md border border-slate-200 bg-slate-50 p-3"><div className="text-xs font-semibold uppercase text-slate-500">Emissão até empenho</div><div className="text-lg font-bold">{providerTimingStats.issueToCommitment.toFixed(1)} dias</div></div>
@@ -657,7 +663,7 @@ export default function Home() {
               </div>)}</div> : <p className="text-sm text-slate-600">Nenhum prestador provável encontrado com os dados atuais.</p>}
             </div>
             <div className="rounded-md border border-slate-200 bg-slate-50 p-3">
-              <div className="mb-2 text-sm font-semibold text-slate-700">Despesas CISLAV compatíveis</div>
+              <div className="mb-2 text-sm font-semibold text-slate-700">Despesas públicas CISLAV compatíveis</div>
               {expenseMatches.length ? <div className="space-y-2">{expenseMatches.map((expense) => {
                 const delay = expenseDelay(expense, today)
                 const open = expenseOpenAmount(expense)
@@ -681,10 +687,10 @@ export default function Home() {
                     {expense.sourceUrl && <a className="inline-block rounded-md border border-slate-300 px-3 py-1 text-leaf underline" href={expense.sourceUrl} target="_blank">abrir fonte</a>}
                   </div>
                 </div>
-              })}</div> : <p className="text-sm text-slate-600">Nenhuma despesa importada bateu com CPF/CNPJ, razão social, número da NF ou mês de emissão.</p>}
+              })}</div> : <p className="text-sm text-slate-600">Nenhuma despesa pública bateu com CPF/CNPJ, razão social, número da NF ou mês de emissão.</p>}
             </div>
           </div>
-          <p className="mt-3 text-sm text-slate-600">Esta checagem usa uma base inicial. O ideal é o cron importar diariamente o relatório de despesas do CISLAV e preencher CPF/CNPJ, NF e histórico quando o portal disponibilizar esses campos na lupa/detalhe.</p>
+          <p className="mt-3 text-sm text-slate-600">Esta checagem usa dados públicos já importados e atualizados pelo cron. Quando o portal público não expõe CPF/CNPJ ou número da NF no resumo, a correspondência pode depender de nome/histórico; importações locais opcionais não substituem a fonte pública.</p>
         </Card>}
 
         <Card title="Multa, juros e obrigações" icon={<Scale size={18}/>}>
