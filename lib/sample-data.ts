@@ -1,4 +1,4 @@
-import type { AssistanceProvider, CislavExpense, ContractReference, Invoice, Municipality, MunicipalityTransfer } from '@/types'
+import type { AssistanceProvider, AssistentialProduction, CislavExpense, ContractReference, Invoice, Municipality, MunicipalityTransfer } from '@/types'
 
 export const publicSources = [
   { label: 'CISLAV - Tempo Real: Despesa', url: 'https://pt.cislav.mg.gov.br/Tempo_Real_Despesa', note: 'Consulta oficial de despesas; página informa fundamentação na LC 101, art. 48-A, I, e prazo de atualização de um dia útil.' },
@@ -53,6 +53,9 @@ export const cislavExpenses: CislavExpense[] = [
   { id: 'desp-00075-2026', commitmentNumber: '00075-000 / 2026', creditorName: 'SANTA CASA DE BOM SUCESSO', type: 'EE', biddingProcess: '00002524 - 0', fundingSource: '1659002', issueDate: '2026-01-02', committedAmount: 95000, liquidatedAmount: 64588.02, paidAmount: 64429.14, history: 'Hospital/serviço assistencial provável; empenho estimativo com saldo parcial.', sourceUrl: 'https://pt.cislav.mg.gov.br/Tempo_Real_Despesa' },
   { id: 'desp-00454-2026', commitmentNumber: '00454-000 / 2026', creditorName: 'PREFEITURA MUNICIPAL DE LAVRAS', type: 'OP', fundingSource: '1869000', issueDate: '2026-05-04', liquidationDate: '2026-05-18', paymentDate: '2026-05-18', liquidatedAmount: 0, paidAmount: 34592.89, history: 'Registro não assistencial direto; usado como contraponto para evitar classificar toda despesa como atendimento.', sourceUrl: 'https://pt.cislav.mg.gov.br/Tempo_Real_Despesa' }
 ]
+
+export const assistentialProductions: AssistentialProduction[] = []
+
 export const transfers: MunicipalityTransfer[] = [
   { id: 'tr-luminarias-2026-05-2026-05-05', municipalityId: 'luminarias', competence: '2026-05', expectedAmount: 50000, paidAmount: 50000, transferDeadline: '2026-05-29', deadlineRule: 'ultimo_dia_util_competencia', paidAt: '2026-05-05', sourceUrl: 'https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05', sourceDocument: 'RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM LUMINÁRIAS', notes: 'Receita CISLAV de programa.', createdAt: '2026-06-30', updatedAt: '2026-06-30' },
   { id: 'tr-luminarias-2026-05-2026-05-05-2', municipalityId: 'luminarias', competence: '2026-05', expectedAmount: 41751.57, paidAmount: 41751.57, transferDeadline: '2026-05-29', deadlineRule: 'ultimo_dia_util_competencia', paidAt: '2026-05-05', sourceUrl: 'https://pt.cislav.mg.gov.br/api/relatorios/receita?unidade_gestora=1&exercicio=2026&mes_inicial=05&mes_final=05', sourceDocument: 'RECEITA REFERENTE À REPASSE FINANCEIRO PROGRAMA DE SAÚDE - PM LUMINÁRIAS', notes: 'Receita CISLAV de programa.', createdAt: '2026-06-30', updatedAt: '2026-06-30' },

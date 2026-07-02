@@ -3,14 +3,14 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { AlertTriangle, Banknote, CalendarClock, CheckCircle2, CheckSquare, ChevronDown, ChevronRight, ExternalLink, FileText, Gauge, LayoutDashboard, Plus, Scale, Search, Upload } from 'lucide-react'
 import { average, invoiceDelay, invoiceTone, penaltyEstimate, riskLevel, stricterMunicipalDeadline, transferDelay, transferStatus } from '@/lib/calculations'
-import { assistanceProviders, cislavExpenses, contracts as seedContracts, invoices as seedInvoices, municipalities as seedMunicipalities, publicSources, transfers as seedTransfers } from '@/lib/sample-data'
+import { assistanceProviders, assistentialProductions as seedAssistentialProductions, cislavExpenses, contracts as seedContracts, invoices as seedInvoices, municipalities as seedMunicipalities, publicSources, transfers as seedTransfers } from '@/lib/sample-data'
 import { historicalGeneratedAt, historicalSummaries } from '@/lib/historical-data'
 import { calculateBusinessDeadline, formatDate, overdueDays, parseDate } from '@/lib/date-utils'
-import type { AssistanceProvider, CislavExpense, Invoice, MunicipalInvoiceEvidence, MunicipalityTransfer } from '@/types'
+import type { AssistanceProvider, AssistentialProduction, CislavExpense, Invoice, MunicipalInvoiceEvidence, MunicipalityTransfer } from '@/types'
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 const today = new Date()
-const stateVersion = '2026-07-provider-nf-candidates'
+const stateVersion = '2026-07-production-import'
 const municipalAudit = [
   { id: 'carrancas', status: 'conciliado', source: 'API municipal validada', nfCount: 1, note: 'NFSe 5792 encontrada.' },
   { id: 'ibituruna', status: 'conciliado', source: 'API municipal validada', nfCount: 4, note: 'NFs 5719 e 5734 encontradas.' },
@@ -98,6 +98,77 @@ function normalizeDocument(value = '') {
   return value.replace(/\D/g, '')
 }
 
+function normalizeHeader(value = '') {
+  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase()
+}
+
+function parseMoneyValue(value = '') {
+  const cleaned = value.replace(/[R$\s]/g, '').replace(/\./g, '').replace(',', '.')
+  const parsed = Number(cleaned)
+  return Number.isFinite(parsed) ? parsed : 0
+}
+
+function parseFlexibleDate(value = '') {
+  const trimmed = value.trim()
+  const br = trimmed.match(/^(\d{2})\/(\d{2})\/(\d{4})$/)
+  if (br) return `${br[3]}-${br[2]}-${br[1]}`
+  const iso = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})/)
+  return iso ? iso[0] : undefined
+}
+
+function detectDelimiter(line = '') {
+  return [';', ',', '\t'].sort((a, b) => line.split(b).length - line.split(a).length)[0]
+}
+
+function parseDelimitedRows(text: string) {
+  const firstLine = text.split(/\r?\n/).find((line) => line.trim()) ?? ''
+  const delimiter = detectDelimiter(firstLine)
+  const rows: string[][] = []
+  let row: string[] = []
+  let cell = ''
+  let quoted = false
+  for (let index = 0; index < text.length; index += 1) {
+    const char = text[index]
+    const next = text[index + 1]
+    if (char === '"' && quoted && next === '"') {
+      cell += '"'
+      index += 1
+    } else if (char === '"') {
+      quoted = !quoted
+    } else if (char === delimiter && !quoted) {
+      row.push(cell.trim())
+      cell = ''
+    } else if ((char === '\n' || char === '\r') && !quoted) {
+      if (char === '\r' && next === '\n') index += 1
+      row.push(cell.trim())
+      if (row.some(Boolean)) rows.push(row)
+      row = []
+      cell = ''
+    } else {
+      cell += char
+    }
+  }
+  row.push(cell.trim())
+  if (row.some(Boolean)) rows.push(row)
+  return rows
+}
+
+function fieldByAliases(row: Record<string, string>, aliases: string[]) {
+  return aliases.map((alias) => row[normalizeHeader(alias)]).find((value) => value !== undefined && value !== '') ?? ''
+}
+
+function inferProductionModel(headers: string[]): AssistentialProduction['sourceModel'] {
+  const normalized = headers.map(normalizeHeader)
+  if (normalized.includes('nomepaciente') && normalized.includes('codigosus')) return 'EP'
+  if (normalized.includes('municipio') && normalized.includes('banco') && normalized.includes('agencia')) return 'EM'
+  if (normalized.includes('procedimentoprincipal')) return 'PC'
+  if (normalized.includes('subgrupo')) return 'SG'
+  if (normalized.includes('municipio') && normalized.includes('fornecedor') && normalized.includes('valortotal')) return 'EF'
+  if (normalized.includes('qtd') && normalized.includes('profissional')) return 'E'
+  if (normalized.includes('qtd')) return 'S'
+  return 'A'
+}
+
 function expenseDeadline(expense: CislavExpense) {
   const baseDate = expense.liquidationDate ?? expense.issueDate
   return calculateBusinessDeadline(parseDate(baseDate), 21)
@@ -139,6 +210,18 @@ function expenseExactMatch(expense: CislavExpense, invoice: Invoice) {
   return (documentMatch || numberMatch) && (numberMatch || issueMatch)
 }
 
+function productionMatchesInvoice(production: AssistentialProduction, invoice: Invoice, serviceMonth: string) {
+  const invoiceDocument = normalizeDocument(invoice.professionalDocument)
+  const documentMatch = Boolean(invoiceDocument && normalizeDocument(production.providerDocument) === invoiceDocument)
+  const provider = normalizeText(production.providerName)
+  const professional = normalizeText(production.professionalName)
+  const invoiceName = normalizeText(invoice.professionalName)
+  const nameMatch = invoiceName.length >= 6 && (provider.includes(invoiceName) || invoiceName.includes(provider) || professional.includes(invoiceName) || invoiceName.includes(professional))
+  const municipalityMatch = !production.municipalityId || invoice.municipalityIds.includes(production.municipalityId)
+  const competenceMatch = production.competence === serviceMonth || production.competence === monthFromDate(invoice.issueDate)
+  return Boolean((documentMatch || nameMatch) && municipalityMatch && competenceMatch)
+}
+
 function monthLabelFromHistory(history = '') {
   const normalized = history.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase()
   const months = [
@@ -164,6 +247,9 @@ export default function Home() {
   const [transfers, setTransfers] = useState<MunicipalityTransfer[]>(seedTransfers)
   const [selectedId, setSelectedId] = useState(seedInvoices[0]?.id ?? '')
   const [csv, setCsv] = useState('')
+  const [productionCsv, setProductionCsv] = useState('')
+  const [productions, setProductions] = useState<AssistentialProduction[]>(seedAssistentialProductions)
+  const [productionImportFeedback, setProductionImportFeedback] = useState('')
   const [activeTab, setActiveTab] = useState<'nfse' | 'prefeituras'>('nfse')
   const [selectedYear, setSelectedYear] = useState('ultimos12')
   const [selectedMonth, setSelectedMonth] = useState('todos')
@@ -175,11 +261,11 @@ export default function Home() {
     if (stored) {
       const parsed = JSON.parse(stored)
       if (parsed.version === stateVersion) {
-        setInvoices(parsed.invoices ?? seedInvoices); setTransfers(parsed.transfers ?? seedTransfers); setSelectedId(parsed.invoices?.[0]?.id ?? seedInvoices[0]?.id ?? '')
+        setInvoices(parsed.invoices ?? seedInvoices); setTransfers(parsed.transfers ?? seedTransfers); setProductions(parsed.productions ?? seedAssistentialProductions); setSelectedId(parsed.invoices?.[0]?.id ?? seedInvoices[0]?.id ?? '')
       }
     }
   }, [])
-  useEffect(() => { localStorage.setItem('cislav-monitor-state', JSON.stringify({ version: stateVersion, invoices, transfers })) }, [invoices, transfers])
+  useEffect(() => { localStorage.setItem('cislav-monitor-state', JSON.stringify({ version: stateVersion, invoices, transfers, productions })) }, [invoices, transfers, productions])
 
   const selected = invoices.find((invoice) => invoice.id === selectedId) ?? invoices[0]
   const selectedCashMonth = selected ? monthFromDate(selected.issueDate) : ''
@@ -303,6 +389,19 @@ export default function Home() {
     commitmentToLiquidation: average(expenseMatches.filter((expense) => expense.liquidationDate).map((expense) => Math.max(0, Math.round((parseDate(expense.liquidationDate as string).getTime() - parseDate(expense.issueDate).getTime()) / 86400000)))),
     liquidationToPayment: average(expenseMatches.filter((expense) => expense.liquidationDate && expense.paymentDate).map((expense) => Math.max(0, Math.round((parseDate(expense.paymentDate as string).getTime() - parseDate(expense.liquidationDate as string).getTime()) / 86400000)))),
   } : undefined
+  const selectedProductions = selected ? productions.filter((production) => productionMatchesInvoice(production, selected, selectedServiceMonth)) : []
+  const selectedProductionTotal = selectedProductions.reduce((sum, production) => sum + production.totalAmount, 0)
+  const selectedProductionMunicipalityIds = [...new Set(selectedProductions.map((production) => production.municipalityId).filter(Boolean) as string[])]
+  const selectedProductionMunicipalities = [...new Set(selectedProductions.map((production) => production.municipalityName).filter(Boolean) as string[])]
+  const productionDifference = selected ? selectedProductionTotal - selected.amount : 0
+  const productionTone = selectedProductions.length === 0 ? 'gray' : Math.abs(productionDifference) <= Math.max(1, (selected?.amount ?? 0) * 0.01) ? 'green' : 'yellow'
+  const productionTitle = selectedProductions.length === 0
+    ? 'Sem produção assistencial importada para esta NF'
+    : productionTone === 'green'
+      ? 'Produção compatível com a NF'
+      : selectedProductionTotal > (selected?.amount ?? 0)
+        ? 'Produção importada maior que a NF'
+        : 'Produção importada menor que a NF'
   const expenseAnalysis = selected ? (() => {
     if (expenseMatches.length === 0) {
       return likelyProviders.length
@@ -363,6 +462,60 @@ export default function Home() {
     const providerText = provider ? `prestador identificado: ${provider.name}` : 'prestador ainda não identificado na lista provável'
     const expenseText = expenses.length ? `${expenses.length} NF/despesa do CISLAV encontrada(s) para este documento` : 'nenhuma despesa do CISLAV encontrada para este documento'
     setProviderSearchFeedback(`${providerText}; ${expenseText}. Confira os candidatos na seção de checagem abaixo.`)
+  }
+  function importAssistentialProduction() {
+    const rows = parseDelimitedRows(productionCsv)
+    if (rows.length < 2) {
+      setProductionImportFeedback('Cole o CSV exportado do Faturamento antes de importar.')
+      return
+    }
+    const headers = rows[0]
+    const model = inferProductionModel(headers)
+    const importedAt = new Date().toISOString()
+    const records = rows.slice(1).map((cols, index) => {
+      const row = Object.fromEntries(headers.map((header, headerIndex) => [normalizeHeader(header), cols[headerIndex] ?? '']))
+      const providerName = fieldByAliases(row, ['Fornecedor', 'Prestador', 'Razão Social'])
+      const professionalName = fieldByAliases(row, ['Profissional'])
+      const municipalityName = fieldByAliases(row, ['Município', 'Municipio'])
+      const serviceDate = parseFlexibleDate(fieldByAliases(row, ['Data', 'DtAgCons', 'Data Atendimento']))
+      const quantity = parseMoneyValue(fieldByAliases(row, ['QTD', 'Quantidade'])) || 1
+      const unitAmount = parseMoneyValue(fieldByAliases(row, ['Valor Unitário', 'Valor Unitario', 'Valor']))
+      const totalAmount = parseMoneyValue(fieldByAliases(row, ['Valor Total'])) || unitAmount * quantity
+      const municipality = seedMunicipalities.find((city) => normalizeText(city.name) === normalizeText(municipalityName))
+      const competence = serviceDate ? monthFromDate(serviceDate) : selectedServiceMonth || selectedCashMonth
+      const providerDocument = normalizeDocument(fieldByAliases(row, ['CPF/CNPJ', 'CNPJ', 'Documento', 'CNPJ/CPF']))
+      if (!providerName && !professionalName && !municipalityName && totalAmount === 0) return undefined
+      return {
+        id: `prod-${Date.now()}-${index}`,
+        source: 'iconsorcio_export' as const,
+        sourceModel: model,
+        providerName: providerName || professionalName || 'Prestador não informado',
+        providerDocument: providerDocument || undefined,
+        professionalName: professionalName || undefined,
+        municipalityName: municipality?.name ?? (municipalityName || undefined),
+        municipalityId: municipality?.id,
+        serviceDate,
+        competence,
+        procedureName: fieldByAliases(row, ['Procedimento', 'Procedimento Principal', 'Sub-Grupo']) || undefined,
+        procedureCode: fieldByAliases(row, ['Código SUS', 'Codigo SUS']) || undefined,
+        quantity,
+        unitAmount: unitAmount || undefined,
+        totalAmount,
+        requestCode: fieldByAliases(row, ['Código', 'Codigo', 'CdSolCons']) || undefined,
+        importedAt,
+      } satisfies AssistentialProduction
+    }).filter(Boolean) as AssistentialProduction[]
+    if (!records.length) {
+      setProductionImportFeedback('Não encontrei linhas válidas. Confira se o CSV tem cabeçalho e colunas como Fornecedor, Município, Data, QTD ou Valor Total.')
+      return
+    }
+    setProductions((items) => [...records, ...items])
+    setProductionCsv('')
+    setProductionImportFeedback(`${records.length} linha(s) importada(s) do modelo ${model ?? 'não identificado'}. Os dados ficaram somente neste navegador.`)
+  }
+  function useProductionMunicipalities() {
+    if (!selected || selectedProductionMunicipalityIds.length === 0) return
+    updateSelected('municipalityIds', selectedProductionMunicipalityIds)
   }
   function addInvoice() { const id = `nf-${Date.now()}`; const invoice: Invoice = { id, number: `NF-${invoices.length + 1}`, professionalName: 'Novo profissional', issueDate: '2026-06-01', acceptedDate: '2026-06-01', contractualBusinessDays: 21, amount: 0, municipalityIds: ['lavras'], paymentStatus: 'pending', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }; setInvoices([invoice, ...invoices]); setSelectedId(id) }
   function importCsv() {
@@ -435,6 +588,40 @@ export default function Home() {
           </div>
           <div className="mt-4 rounded-md bg-panel p-4 text-sm"><strong>Linha do tempo:</strong> NF emitida em {formatDate(selected.issueDate)}; aceita em {formatDate(selected.acceptedDate)}; contagem inicia no próximo dia útil; limite em {formatDate(selectedDelay?.deadline)}. {selectedTone?.message}</div>
           <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Competência e caixa:</strong> a NFSe emitida em {selectedCashMonth} representa atendimentos de {selectedServiceMonth}, mas o risco de fluxo de caixa é comparado com os repasses de {selectedCashMonth}, mês em que a NFSe entrou para cobrança. O aceite define apenas o prazo de pagamento ao profissional.</div>
+        </Card>}
+
+        {selected && <Card title="Produção assistencial importada" icon={<Upload size={18}/>}>
+          <div className={`mb-3 rounded-md p-3 text-sm ring-1 ${statusClass(productionTone)}`}>
+            <strong>{productionTitle}:</strong> {selectedProductions.length
+              ? `${selectedProductions.length} linha(s), total de ${money.format(selectedProductionTotal)} para a competência assistencial ${selectedServiceMonth}. Diferença contra a NF: ${money.format(productionDifference)}.`
+              : 'Exporte no sistema do prestador em Faturamento > Gerar Planilha e cole aqui o CSV. Use preferencialmente Sintético, Empenho por Município ou Extrato Prestador.'}
+          </div>
+          <div className="grid gap-3 lg:grid-cols-[1.2fr_1fr]">
+            <div>
+              <p className="mb-2 text-sm text-slate-600">Cole CSV com cabeçalho. O app reconhece colunas como Município, Fornecedor, Profissional, Data, Procedimento, QTD, Valor, Valor Unitário e Valor Total. Dados de pacientes não são exibidos.</p>
+              <textarea value={productionCsv} onChange={(event) => { setProductionCsv(event.target.value); setProductionImportFeedback('') }} className="min-h-28 w-full rounded-md border p-2 font-mono text-xs" placeholder={'Município;Fornecedor;Profissional;Data;Procedimento;QTD;Valor Total\nLavras;Clinica Exemplo;Dra. Exemplo;15/04/2026;Consulta;10;10000,00'} />
+              <div className="mt-2 flex flex-wrap items-center gap-2">
+                <button onClick={importAssistentialProduction} className="focus-ring inline-flex items-center gap-2 rounded-md bg-ink px-4 py-2 text-sm font-semibold text-white"><Upload size={16}/>Importar produção</button>
+                {selectedProductionMunicipalityIds.length > 0 && <button onClick={useProductionMunicipalities} className="focus-ring rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700">usar municípios da produção</button>}
+                {productionImportFeedback && <span className="text-xs text-slate-600">{productionImportFeedback}</span>}
+              </div>
+            </div>
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-3">
+              <div className="mb-2 text-sm font-semibold text-slate-700">Resumo desta NF</div>
+              <div className="grid gap-2 text-sm">
+                <div className="rounded border border-slate-200 bg-white p-2"><span className="block text-xs font-semibold uppercase text-slate-500">Total produção</span><strong>{money.format(selectedProductionTotal)}</strong></div>
+                <div className="rounded border border-slate-200 bg-white p-2"><span className="block text-xs font-semibold uppercase text-slate-500">Municípios na produção</span>{selectedProductionMunicipalities.length ? selectedProductionMunicipalities.join(', ') : 'sem produção compatível'}</div>
+                <div className="rounded border border-slate-200 bg-white p-2"><span className="block text-xs font-semibold uppercase text-slate-500">Base importada</span>{productions.length} linha(s) de produção no navegador</div>
+              </div>
+              {selectedProductions.length > 0 && <div className="mt-3 max-h-52 overflow-auto rounded border border-slate-200 bg-white">
+                {selectedProductions.slice(0, 8).map((production) => <div key={production.id} className="border-b border-slate-100 p-2 text-xs last:border-b-0">
+                  <strong>{production.municipalityName ?? 'Município não informado'}</strong> · {formatDate(production.serviceDate)} · {money.format(production.totalAmount)}
+                  <span className="block text-slate-600">{production.procedureName ?? 'Procedimento não informado'} · QTD {production.quantity}</span>
+                </div>)}
+              </div>}
+              <p className="mt-3 text-xs text-slate-600">Produção assistencial valida prestação/competência/municípios. Pagamento continua sendo conferido pelas despesas públicas do CISLAV.</p>
+            </div>
+          </div>
         </Card>}
 
         {selected && <Card title="Checagem na base CISLAV" icon={<CheckSquare size={18}/>}>

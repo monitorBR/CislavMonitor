@@ -85,6 +85,26 @@ export interface CislavExpense {
   sourceUrl?: string
 }
 
+export interface AssistentialProduction {
+  id: string
+  source: 'iconsorcio_export' | 'manual'
+  sourceModel?: 'A' | 'S' | 'E' | 'EF' | 'EM' | 'PC' | 'SG' | 'EP'
+  providerName: string
+  providerDocument?: string
+  professionalName?: string
+  municipalityName?: string
+  municipalityId?: string
+  serviceDate?: string
+  competence: string
+  procedureName?: string
+  procedureCode?: string
+  quantity: number
+  unitAmount?: number
+  totalAmount: number
+  requestCode?: string
+  importedAt: string
+}
+
 export interface MunicipalInvoiceEvidence {
   municipalityId: string
   municipality: string
