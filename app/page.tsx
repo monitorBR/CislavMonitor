@@ -312,15 +312,15 @@ export default function Home() {
   }, [invoices, transfers])
   const transferTotals = useMemo(() => {
     return seedMunicipalities.map((city) => {
-      const cityTransfers = transfers.filter((transfer) => transfer.municipalityId === city.id)
+      const cityTransfers = selectedCashTransfers.filter((transfer) => transfer.municipalityId === city.id)
       const total = cityTransfers.reduce((sum, transfer) => sum + (transfer.paidAmount ?? transfer.expectedAmount ?? 0), 0)
       const dates = [...new Set(cityTransfers.map((transfer) => transfer.paidAt).filter(Boolean))].sort()
       return { city, total, count: cityTransfers.length, dates }
     }).filter((item) => item.count > 0).sort((a, b) => b.total - a.total)
-  }, [transfers])
+  }, [selectedCashTransfers])
   const transferGroups = useMemo(() => {
     const groups = new Map<string, { key: string; municipalityId: string; cityName: string; competence: string; rows: MunicipalityTransfer[]; expected: number; paid: number; firstPaidAt?: string; lastPaidAt?: string; deadline: string; divergenceNote?: string }>()
-    for (const transfer of transfers) {
+    for (const transfer of selectedCashTransfers) {
       const city = seedMunicipalities.find((item) => item.id === transfer.municipalityId)
       const key = `${transfer.municipalityId}-${transfer.competence}`
       const group = groups.get(key) ?? {
@@ -347,7 +347,7 @@ export default function Home() {
       groups.set(key, group)
     }
     return Array.from(groups.values()).sort((a, b) => (a.firstPaidAt ?? a.competence).localeCompare(b.firstPaidAt ?? b.competence) || a.cityName.localeCompare(b.cityName, 'pt-BR'))
-  }, [transfers])
+  }, [selectedCashTransfers])
   const monthlyCityStatus = useMemo(() => {
     const periodMonths = selectedYear === 'ultimos12' ? historicalMonths.slice(-12) : historicalMonths
     const visibleMonths = periodMonths.filter((month) => (selectedYear === 'ultimos12' || selectedYear === 'todos' || month.startsWith(selectedYear)) && (selectedMonth === 'todos' || month.endsWith(`-${selectedMonth}`)))
@@ -720,7 +720,9 @@ export default function Home() {
           </div>
         </Card>
 
-        <Card title="Repasses municipais" icon={<Banknote size={18}/>}>
+        <Card title={`Repasses municipais da emissão ${selectedCashMonth}`} icon={<Banknote size={18}/>}>
+          <p className="mb-3 text-sm text-slate-600">Esta tabela acompanha a data de emissão da NF: mostra somente repasses com competência {selectedCashMonth} dos municípios selecionados. A competência dos atendimentos consolidados é {selectedServiceMonth}.</p>
+          {transferGroups.length === 0 && <div className="mb-3 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-950">Nenhum repasse importado para {selectedCashMonth} nos municípios selecionados. Isso pode indicar ausência de dado importado, prefeitura sem NF emitida/localizada ou repasse ainda não conciliado.</div>}
           <div className="mb-4 grid gap-2 md:grid-cols-3">
             {transferTotals.map((item) => <div key={item.city.id} className="rounded-md border border-slate-200 bg-slate-50 p-3">
               <div className="text-xs font-semibold uppercase text-slate-500">{item.city.name}</div>
