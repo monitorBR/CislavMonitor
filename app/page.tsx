@@ -98,6 +98,15 @@ function normalizeDocument(value = '') {
   return value.replace(/\D/g, '')
 }
 
+function extractDocumentFromText(value = '') {
+  const match = value.match(/\d[\d.\-/\s]{10,}\d/)
+  return match ? normalizeDocument(match[0]) : ''
+}
+
+function cleanProviderName(value = '') {
+  return value.replace(/\s*\|\s*\d[\d.\-/\s]{10,}\d\s*$/, '').trim()
+}
+
 function normalizeHeader(value = '') {
   return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase()
 }
@@ -212,7 +221,7 @@ function expenseExactMatch(expense: CislavExpense, invoice: Invoice) {
 
 function productionMatchesInvoice(production: AssistentialProduction, invoice: Invoice, serviceMonth: string) {
   const invoiceDocument = normalizeDocument(invoice.professionalDocument)
-  const documentMatch = Boolean(invoiceDocument && normalizeDocument(production.providerDocument) === invoiceDocument)
+  const documentMatch = Boolean(invoiceDocument && (normalizeDocument(production.providerDocument) === invoiceDocument || extractDocumentFromText(production.providerName) === invoiceDocument))
   const provider = normalizeText(production.providerName)
   const professional = normalizeText(production.professionalName)
   const invoiceName = normalizeText(invoice.professionalName)
@@ -456,12 +465,19 @@ export default function Home() {
     }
     const provider = assistanceProviders.find((item) => normalizeDocument(item.document) === document)
     const expenses = cislavExpenses.filter((item) => normalizeDocument(item.creditorDocument) === document)
-    if (provider && (!selected.professionalName || selected.professionalName === 'Profissional de saúde' || selected.professionalName === 'Novo profissional')) {
-      updateSelected('professionalName', provider.name)
+    const productionRecords = productions.filter((item) => normalizeDocument(item.providerDocument) === document || extractDocumentFromText(item.providerName) === document)
+    const productionProvider = productionRecords[0]
+    if ((provider || productionProvider) && (!selected.professionalName || selected.professionalName === 'Profissional de saúde' || selected.professionalName === 'Novo profissional')) {
+      updateSelected('professionalName', provider?.name ?? cleanProviderName(productionProvider.providerName))
     }
-    const providerText = provider ? `prestador identificado: ${provider.name}` : 'prestador ainda não identificado na lista provável'
+    const providerText = provider
+      ? `prestador identificado: ${provider.name}`
+      : productionProvider
+        ? `prestador identificado na produção importada: ${cleanProviderName(productionProvider.providerName)}`
+        : 'prestador ainda não identificado na lista provável ou produção importada'
     const expenseText = expenses.length ? `${expenses.length} NF/despesa do CISLAV encontrada(s) para este documento` : 'nenhuma despesa do CISLAV encontrada para este documento'
-    setProviderSearchFeedback(`${providerText}; ${expenseText}. Confira os candidatos na seção de checagem abaixo.`)
+    const productionText = productionRecords.length ? `${productionRecords.length} linha(s) de produção assistencial encontrada(s)` : 'nenhuma produção assistencial importada para este documento'
+    setProviderSearchFeedback(`${providerText}; ${expenseText}; ${productionText}. Confira os candidatos na seção de checagem abaixo.`)
   }
   function importAssistentialProduction() {
     const rows = parseDelimitedRows(productionCsv)
@@ -474,7 +490,8 @@ export default function Home() {
     const importedAt = new Date().toISOString()
     const records = rows.slice(1).map((cols, index) => {
       const row = Object.fromEntries(headers.map((header, headerIndex) => [normalizeHeader(header), cols[headerIndex] ?? '']))
-      const providerName = fieldByAliases(row, ['Fornecedor', 'Prestador', 'Razão Social'])
+      const providerRawName = fieldByAliases(row, ['Fornecedor', 'Prestador', 'Razão Social'])
+      const providerName = cleanProviderName(providerRawName)
       const professionalName = fieldByAliases(row, ['Profissional'])
       const municipalityName = fieldByAliases(row, ['Município', 'Municipio'])
       const serviceDate = parseFlexibleDate(fieldByAliases(row, ['Data', 'DtAgCons', 'Data Atendimento']))
@@ -483,7 +500,7 @@ export default function Home() {
       const totalAmount = parseMoneyValue(fieldByAliases(row, ['Valor Total'])) || unitAmount * quantity
       const municipality = seedMunicipalities.find((city) => normalizeText(city.name) === normalizeText(municipalityName))
       const competence = serviceDate ? monthFromDate(serviceDate) : selectedServiceMonth || selectedCashMonth
-      const providerDocument = normalizeDocument(fieldByAliases(row, ['CPF/CNPJ', 'CNPJ', 'Documento', 'CNPJ/CPF']))
+      const providerDocument = normalizeDocument(fieldByAliases(row, ['CPF/CNPJ', 'CNPJ', 'Documento', 'CNPJ/CPF'])) || extractDocumentFromText(providerRawName)
       if (!providerName && !professionalName && !municipalityName && totalAmount === 0) return undefined
       return {
         id: `prod-${Date.now()}-${index}`,
